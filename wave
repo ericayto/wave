@@ -1,0 +1,163 @@
+#!/usr/bin/env python3
+"""
+Wave - Local LLM-Driven Crypto Trading Bot
+CLI Bootstrap for starting and managing Wave services.
+"""
+
+import os
+import sys
+import subprocess
+import signal
+import time
+import argparse
+from pathlib import Path
+
+# Add the project root to Python path
+PROJECT_ROOT = Path(__file__).parent.absolute()
+sys.path.insert(0, str(PROJECT_ROOT))
+
+def setup_environment():
+    """Set up Python virtual environment and install dependencies."""
+    print("🌊 Setting up Wave environment...")
+    
+    # Create virtual environment
+    venv_path = PROJECT_ROOT / "venv"
+    if not venv_path.exists():
+        print("Creating Python virtual environment...")
+        subprocess.run([sys.executable, "-m", "venv", str(venv_path)], check=True)
+    
+    # Get python and pip paths
+    if os.name == 'nt':  # Windows
+        python_exe = venv_path / "Scripts" / "python.exe"
+        pip_exe = venv_path / "Scripts" / "pip.exe"
+    else:  # Unix-like
+        python_exe = venv_path / "bin" / "python"
+        pip_exe = venv_path / "bin" / "pip"
+    
+    # Install backend dependencies
+    print("Installing Python dependencies...")
+    backend_reqs = PROJECT_ROOT / "wave_backend" / "requirements.txt"
+    subprocess.run([str(pip_exe), "install", "-r", str(backend_reqs)], check=True)
+    
+    # Install frontend dependencies if Node.js is available
+    frontend_path = PROJECT_ROOT / "wave_frontend"
+    if frontend_path.exists():
+        try:
+            print("Installing Node.js dependencies...")
+            subprocess.run(["npm", "install"], cwd=str(frontend_path), check=True)
+        except FileNotFoundError:
+            print("⚠️  Node.js not found. Please install Node.js to set up the frontend.")
+    
+    # Create data directory
+    data_dir = PROJECT_ROOT / "data"
+    data_dir.mkdir(exist_ok=True)
+    
+    print("✅ Environment setup complete!")
+
+def start_services():
+    """Start Wave backend and frontend services."""
+    print("🌊 Starting Wave services...")
+    
+    # Check if virtual environment exists
+    venv_path = PROJECT_ROOT / "venv"
+    if not venv_path.exists():
+        print("❌ Virtual environment not found. Please run 'wave setup' first.")
+        return
+    
+    # Get python executable path
+    if os.name == 'nt':  # Windows
+        python_exe = venv_path / "Scripts" / "python.exe"
+    else:  # Unix-like
+        python_exe = venv_path / "bin" / "python"
+    
+    # Start backend API
+    backend_script = PROJECT_ROOT / "wave_backend" / "main.py"
+    if backend_script.exists():
+        print("Starting backend API on port 8080...")
+        backend_process = subprocess.Popen([
+            str(python_exe), str(backend_script)
+        ], cwd=str(PROJECT_ROOT))
+        
+        # Give backend time to start
+        time.sleep(3)
+        
+        # Start frontend if available
+        frontend_path = PROJECT_ROOT / "wave_frontend"
+        frontend_process = None
+        if frontend_path.exists():
+            try:
+                print("Starting frontend UI on port 5173...")
+                frontend_process = subprocess.Popen([
+                    "npm", "run", "dev"
+                ], cwd=str(frontend_path))
+            except FileNotFoundError:
+                print("⚠️  Node.js not found. Frontend will not start.")
+        
+        print("✅ Wave is running!")
+        print("   Backend API: http://localhost:8080")
+        if frontend_process:
+            print("   Frontend UI: http://localhost:5173")
+        print("\nPress Ctrl+C to stop...")
+        
+        try:
+            # Wait for processes
+            if frontend_process:
+                backend_process.wait()
+                frontend_process.wait()
+            else:
+                backend_process.wait()
+        except KeyboardInterrupt:
+            print("\n🛑 Stopping Wave services...")
+            backend_process.terminate()
+            if frontend_process:
+                frontend_process.terminate()
+            backend_process.wait()
+            if frontend_process:
+                frontend_process.wait()
+            print("✅ Wave stopped.")
+    else:
+        print("❌ Backend main.py not found. Please ensure the project is properly set up.")
+
+def stop_services():
+    """Stop all Wave services."""
+    print("🛑 Stopping Wave services...")
+    
+    # Kill any running Wave processes
+    if os.name != 'nt':  # Unix-like systems
+        try:
+            # Find and kill backend processes
+            subprocess.run(["pkill", "-f", "wave_backend"], check=False)
+            # Find and kill frontend processes
+            subprocess.run(["pkill", "-f", "vite.*wave_frontend"], check=False)
+        except subprocess.CalledProcessError:
+            pass
+    
+    print("✅ Wave services stopped.")
+
+def main():
+    """Main CLI entry point."""
+    parser = argparse.ArgumentParser(description="Wave - Local LLM-Driven Crypto Trading Bot")
+    subparsers = parser.add_subparsers(dest='command', help='Available commands')
+    
+    # Setup command
+    setup_parser = subparsers.add_parser('setup', help='Set up Wave environment')
+    
+    # Start command  
+    start_parser = subparsers.add_parser('start', help='Start Wave services')
+    
+    # Stop command
+    stop_parser = subparsers.add_parser('stop', help='Stop Wave services')
+    
+    args = parser.parse_args()
+    
+    if args.command == 'setup':
+        setup_environment()
+    elif args.command == 'start':
+        start_services()
+    elif args.command == 'stop':
+        stop_services()
+    else:
+        parser.print_help()
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,47 @@
+[core]
+base_currency = "USD"
+mode = "paper"  # paper only in v0.2
+data_dir = "./data"
+log_level = "INFO"
+
+[exchanges.kraken]
+api_key = "env:KRAKEN_KEY"
+api_secret = "env:KRAKEN_SECRET"
+sandbox = true  # paper mode
+
+[llm]
+provider = "openai"  # openai|azure|openrouter|local
+model = "gpt-4o-mini"
+max_tokens = 512
+hourly_token_budget = 50000
+api_key = "env:OPENAI_API_KEY"
+
+[memory]
+max_context_tokens = 128000            # provider limit
+target_window_tokens = 24000           # planner budget
+rag_top_k = 6                          # retrieved snippets
+summarize_every_events = 25            # episodic summary cadence
+summarize_every_minutes = 15           # time-based fallback
+summary_target_tokens = 1200           # per summary
+use_local_summarizer = true            # Ollama/llama.cpp
+
+[risk]
+max_position_pct = 0.25
+daily_loss_limit_pct = 2.0
+max_orders_per_hour = 6
+circuit_breaker_spread_bps = 50
+
+[ui]
+port = 5173
+api_port = 8080
+show_thinking_feed = true
+theme = "ocean"
+
+[database]
+url = "sqlite:///./data/wave.db"
+echo = false  # SQL logging
+
+[strategies]
+default_symbols = ["BTC/USDT", "ETH/USDT"]
+default_timeframe = "5m"
+max_active_strategies = 5
