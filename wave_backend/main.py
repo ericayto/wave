@@ -20,13 +20,14 @@ import uvicorn
 from wave_backend.config.settings import get_settings
 from wave_backend.models.database import init_database
 from wave_backend.models.all_models import *  # Import all models
-from wave_backend.api import auth, portfolio, market, trading, strategies, risk, logs, memory
+from wave_backend.api import auth, portfolio, market, trading, strategies, risk, logs, memory, llm
 from wave_backend.services.event_bus import EventBus
 from wave_backend.services.websocket import WebSocketManager
 from wave_backend.services.market_data import MarketDataService
 from wave_backend.services.paper_broker import PaperBroker
 from wave_backend.services.risk_engine import RiskEngine
 from wave_backend.services.strategy_engine import StrategyEngine
+from wave_backend.services.llm_planner import get_llm_planner
 from wave_backend.strategies.sma_crossover import create_sma_crossover_strategy
 from wave_backend.strategies.rsi_mean_reversion import create_rsi_mean_reversion_strategy
 
@@ -37,6 +38,7 @@ market_data_service = MarketDataService(event_bus)
 paper_broker = PaperBroker(event_bus)
 risk_engine = RiskEngine(event_bus)
 strategy_engine = StrategyEngine(event_bus, market_data_service, paper_broker, risk_engine)
+llm_planner = None  # Initialized in lifespan
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -72,16 +74,37 @@ async def lifespan(app: FastAPI):
     await market_data_service.subscribe_to_symbol("BTC/USDT")
     await market_data_service.subscribe_to_symbol("ETH/USDT")
     
-    print("✅ Wave Backend M1 started successfully!")
+    # Initialize LLM Planner (M2)
+    global llm_planner
+    settings = get_settings()
+    if settings.llm.planning_enabled:
+        llm_planner = get_llm_planner(
+            user_id=1,  # Default user for now
+            event_bus=event_bus,
+            market_data=market_data_service,
+            paper_broker=paper_broker,
+            risk_engine=risk_engine,
+            strategy_engine=strategy_engine
+        )
+        print("🧠 LLM Planner: Started with autonomous planning")
+    else:
+        print("🧠 LLM Planner: Available but autonomous planning disabled")
+    
+    print("✅ Wave Backend M2 started successfully!")
     print(f"   📊 Market Data: Connected")
-    print(f"   🤖 Strategy Engine: {len(strategy_engine.strategies)} strategies registered")
+    print(f"   🤖 Strategy Engine: {len(strategy_engine.strategies)} strategies registered") 
     print(f"   🛡️  Risk Engine: Active with limits enforcement")
     print(f"   💼 Paper Broker: Ready for realistic execution")
+    print(f"   🧠 LLM Planner: {settings.llm.provider} provider with {settings.llm.model}")
+    print(f"   💭 Context Manager: Ready for memory and RAG")
+    print(f"   🎯 Strategy Generator: Ready for natural language strategies")
     
     yield
     
     # Shutdown
     print("🛑 Shutting down Wave Backend...")
+    if llm_planner:
+        await llm_planner.shutdown()
     await strategy_engine.stop()
     await risk_engine.stop()
     await market_data_service.stop()
@@ -117,6 +140,7 @@ def create_app() -> FastAPI:
     app.include_router(risk.router, prefix="/api/risk", tags=["risk"])
     app.include_router(logs.router, prefix="/api/logs", tags=["logs"])
     app.include_router(memory.router, prefix="/api/memory", tags=["memory"])
+    app.include_router(llm.router, prefix="/api/llm", tags=["llm"])
     
     # WebSocket endpoint
     app.include_router(websocket_manager.router, prefix="/ws")
@@ -129,9 +153,13 @@ def create_app() -> FastAPI:
     # Status endpoint
     @app.get("/status")
     async def get_status():
+        llm_status = {}
+        if llm_planner:
+            llm_status = await llm_planner.get_status()
+        
         return {
             "status": "running",
-            "version": "M1",
+            "version": "M2",
             "mode": settings.core.mode,
             "services": {
                 "market_data": {
@@ -144,11 +172,18 @@ def create_app() -> FastAPI:
                     "portfolio_value": paper_broker.get_portfolio_value(),
                     "positions": len(paper_broker.get_positions()),
                     "pending_orders": len(paper_broker.orders)
-                }
+                },
+                "llm_planner": llm_status if llm_planner else {"status": "disabled"}
             },
-            "provider": settings.llm.provider,
-            "budgets": {
-                "hourly_tokens": settings.llm.hourly_token_budget
+            "llm": {
+                "provider": settings.llm.provider,
+                "model": settings.llm.model,
+                "planning_enabled": settings.llm.planning_enabled,
+                "planning_interval": settings.llm.planning_interval_seconds,
+                "budgets": {
+                    "hourly_tokens": settings.llm.hourly_token_budget,
+                    "daily_tokens": settings.llm.daily_token_budget
+                }
             }
         }
     

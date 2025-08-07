@@ -12,9 +12,43 @@ sandbox = true  # paper mode
 [llm]
 provider = "openai"  # openai|azure|openrouter|local
 model = "gpt-4o-mini"
-max_tokens = 512
+max_tokens = 1000
+temperature = 0.1
 hourly_token_budget = 50000
+daily_token_budget = 500000
+planning_enabled = true
+planning_interval_seconds = 300  # 5 minutes
+use_cache = true
+cache_ttl_minutes = 15
+
+# Provider-specific configurations
+[llm.providers.openai]
 api_key = "env:OPENAI_API_KEY"
+base_url = "https://api.openai.com/v1"
+model = "gpt-4o-mini"
+hourly_token_budget = 50000
+daily_token_budget = 500000
+
+[llm.providers.azure]
+api_key = "env:AZURE_OPENAI_KEY"
+endpoint = "env:AZURE_OPENAI_ENDPOINT"
+model = "gpt-4o-mini"
+api_version = "2024-02-15-preview"
+hourly_token_budget = 50000
+daily_token_budget = 500000
+
+[llm.providers.openrouter]
+api_key = "env:OPENROUTER_API_KEY"
+base_url = "https://openrouter.ai/api/v1"
+model = "meta-llama/llama-3.1-8b-instruct:free"
+hourly_token_budget = 100000  # Higher limit for cheaper models
+daily_token_budget = 1000000
+
+[llm.providers.local]
+base_url = "http://localhost:11434"  # Ollama default
+model = "llama3.1:8b"
+hourly_token_budget = 1000000  # No real limit for local models
+daily_token_budget = 10000000
 
 [memory]
 max_context_tokens = 128000            # provider limit

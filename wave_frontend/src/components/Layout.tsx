@@ -10,7 +10,10 @@ import {
   Settings,
   Waves,
   Wifi,
-  WifiOff
+  WifiOff,
+  Brain,
+  Sparkles,
+  Database
 } from 'lucide-react'
 
 interface LayoutProps {
@@ -24,6 +27,11 @@ const navigationItems = [
   { id: 'portfolio', label: 'Portfolio', icon: Wallet },
   { id: 'strategies', label: 'Strategies', icon: TrendingUp },
   { id: 'trading', label: 'Trading', icon: Activity },
+  // LLM Section
+  { id: 'llm-center', label: 'LLM Center', icon: Brain },
+  { id: 'strategy-generator', label: 'Strategy Generator', icon: Sparkles },
+  { id: 'memory-inspector', label: 'Memory Inspector', icon: Database },
+  // Settings
   { id: 'settings', label: 'Settings', icon: Settings },
 ]
 
@@ -94,7 +102,7 @@ export const Layout: React.FC<LayoutProps> = ({
         {/* Footer */}
         <div className="p-4 border-t border-white/10">
           <div className="text-xs text-gray-500 text-center">
-            Wave v0.1.0 - Paper Mode
+            Wave v0.2.0 M2 - Paper Mode + LLM
           </div>
         </div>
       </div>
@@ -141,6 +149,12 @@ function getPageDescription(page: string): string {
       return 'Manage and configure trading strategies'
     case 'trading':
       return 'Orders, trades, and execution history'
+    case 'llm-center':
+      return 'LLM control, planning, and query interface'
+    case 'strategy-generator':
+      return 'Generate strategies from natural language'
+    case 'memory-inspector':
+      return 'Memory, context, and RAG management'
     case 'settings':
       return 'Configuration and system settings'
     default:

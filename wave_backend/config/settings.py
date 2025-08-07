@@ -21,12 +21,27 @@ class ExchangeConfig(BaseModel):
     api_secret: str
     sandbox: bool = True
 
+class LLMProviderConfig(BaseModel):
+    api_key: Optional[str] = None
+    base_url: Optional[str] = None
+    endpoint: Optional[str] = None
+    model: str = "gpt-4o-mini"
+    hourly_token_budget: int = 50000
+    daily_token_budget: int = 500000
+    api_version: Optional[str] = None
+
 class LLMConfig(BaseModel):
     provider: str = "openai"
     model: str = "gpt-4o-mini"
-    max_tokens: int = 512
+    max_tokens: int = 1000
+    temperature: float = 0.1
     hourly_token_budget: int = 50000
-    api_key: Optional[str] = None
+    daily_token_budget: int = 500000
+    planning_enabled: bool = True
+    planning_interval_seconds: int = 300
+    use_cache: bool = True
+    cache_ttl_minutes: int = 15
+    providers: Dict[str, LLMProviderConfig] = {}
 
 class MemoryConfig(BaseModel):
     max_context_tokens: int = 128000

@@ -7,6 +7,9 @@ import { Portfolio } from './pages/Portfolio'
 import { Strategies } from './pages/Strategies'
 import { Trading } from './pages/Trading'
 import { Settings } from './pages/Settings'
+import LLMCenter from './pages/LLMCenter'
+import StrategyGenerator from './pages/StrategyGenerator'
+import MemoryInspector from './pages/MemoryInspector'
 
 // Create a query client
 const queryClient = new QueryClient({
@@ -38,6 +41,12 @@ function App() {
         return <Strategies />
       case 'trading':
         return <Trading />
+      case 'llm-center':
+        return <LLMCenter />
+      case 'strategy-generator':
+        return <StrategyGenerator />
+      case 'memory-inspector':
+        return <MemoryInspector />
       case 'settings':
         return <Settings />
       default:
