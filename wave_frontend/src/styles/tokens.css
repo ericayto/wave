@@ -1,0 +1,75 @@
+/**
+ * Design Tokens for Wave Reskin
+ * Based on the mockup specification
+ */
+
+:root {
+  /* Background Colors */
+  --bg: #0f1115;
+  --bg-secondary: #0a0a0b;
+  
+  /* Glass Effects */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-brd: rgba(255, 255, 255, 0.10);
+  --glass-brd-strong: rgba(255, 255, 255, 0.15);
+  
+  /* Text Colors */
+  --text: #e5e7eb; /* zinc-200 */
+  --text-secondary: #a1a1aa; /* zinc-400 */
+  --text-muted: #71717a; /* zinc-500 */
+  
+  /* Accent Colors */
+  --accent-1: #22d3ee; /* cyan-400 */
+  --accent-2: #a78bfa; /* violet-400 */
+  --accent-3: #f0abfc; /* fuchsia-300 */
+  
+  /* Status Colors */
+  --ok: #34d399; /* emerald-400 */
+  --bad: #fb7185; /* rose-400 */
+  --warning: #fbbf24; /* amber-400 */
+  
+  /* Effects */
+  --radius: 1rem; /* 16px rounded-2xl */
+  --shadow-1: 0 10px 40px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 20px 60px rgba(0, 0, 0, 0.4);
+  
+  /* Gradients */
+  --gradient-bg-main: radial-gradient(60% 60% at 20% 10%, rgba(0, 120, 255, 0.25), transparent),
+                      radial-gradient(60% 60% at 80% 0%, rgba(168, 85, 247, 0.18), transparent),
+                      linear-gradient(180deg, #0a0a0b, #0f1115);
+  
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  
+  --gradient-cyan: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #0891b2 100%);
+  --gradient-violet: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #7c3aed 100%);
+  --gradient-fuchsia: linear-gradient(135deg, #f0abfc 0%, #e879f9 50%, #d946ef 100%);
+  
+  /* Chart Gradients */
+  --chart-gradient-area: linear-gradient(180deg, rgba(34, 211, 238, 0.6) 0%, rgba(34, 211, 238, 0) 100%);
+  --chart-gradient-line: #a78bfa;
+  
+  /* Animation */
+  --spring-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --spring-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Already optimized for dark mode */
+  }
+}
+
+/* Light mode support (future) */
+[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-secondary: #f8fafc;
+  --glass-bg: rgba(0, 0, 0, 0.05);
+  --glass-brd: rgba(0, 0, 0, 0.10);
+  --text: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+}

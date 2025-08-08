@@ -1,0 +1,314 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Design Tokens for Wave Reskin */
+    --bg: #0f1115;
+    --bg-secondary: #0a0a0b;
+    
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-brd: rgba(255, 255, 255, 0.10);
+    --glass-brd-strong: rgba(255, 255, 255, 0.15);
+    
+    --text: #e5e7eb; /* zinc-200 */
+    --text-secondary: #a1a1aa; /* zinc-400 */
+    --text-muted: #71717a; /* zinc-500 */
+    
+    --accent-1: #22d3ee; /* cyan-400 */
+    --accent-2: #a78bfa; /* violet-400 */
+    --accent-3: #f0abfc; /* fuchsia-300 */
+    
+    --ok: #34d399; /* emerald-400 */
+    --bad: #fb7185; /* rose-400 */
+    --warning: #fbbf24; /* amber-400 */
+    
+    --radius: 1rem; /* 16px rounded-2xl */
+    --shadow-1: 0 10px 40px rgba(0, 0, 0, 0.35);
+    --shadow-2: 0 20px 60px rgba(0, 0, 0, 0.4);
+    
+    --gradient-bg-main: radial-gradient(60% 60% at 20% 10%, rgba(0, 120, 255, 0.25), transparent),
+                        radial-gradient(60% 60% at 80% 0%, rgba(168, 85, 247, 0.18), transparent),
+                        linear-gradient(180deg, #0a0a0b, #0f1115);
+    
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    
+    --spring-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --spring-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+    --duration-fast: 150ms;
+    --duration-normal: 250ms;
+    --duration-slow: 350ms;
+    
+    /* Legacy Design System Variables - Updated to match mockup */
+    --bg-base: var(--bg);
+    --bg-elev-1: var(--glass-bg);
+    --bg-elev-2: rgba(255, 255, 255, 0.08);
+    --bg-elev-3: rgba(255, 255, 255, 0.12);
+    
+    --fg-primary: var(--text);
+    --fg-secondary: var(--text-secondary);
+    --fg-muted: var(--text-muted);
+    
+    --accent-cyan: var(--accent-1);
+    --accent-purple: var(--accent-2);
+    --accent-emerald: var(--ok);
+    
+    --glow-cyan: rgba(34, 211, 238, 0.25);
+    --glow-purple: rgba(167, 139, 250, 0.25);
+    --glow-emerald: rgba(52, 211, 153, 0.25);
+    
+    --border-glass: var(--glass-brd);
+    --border-glass-strong: var(--glass-brd-strong);
+    
+    --shadow-glass: var(--shadow-1);
+    --shadow-elevated: var(--shadow-2);
+    
+    --gradient-bg: var(--gradient-bg-main);
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    
+    --blur-low: 6px;
+    --blur-med: 12px;
+    --blur-high: 18px;
+    
+    --ease-standard: var(--spring-standard);
+    --ease-emphasized: var(--spring-bounce);
+    --dur-micro: var(--duration-fast);
+    --dur-overlay: var(--duration-normal);
+
+    /* Legacy compatibility for shadcn components */
+    --background: 15 17 21; /* #0f1115 in HSL */
+    --foreground: 229 231 235; /* #e5e7eb in HSL */
+    --card: 15 17 21;
+    --card-foreground: 229 231 235;
+    --popover: 15 17 21;
+    --popover-foreground: 229 231 235;
+    --primary: 198 100% 58%; /* cyan-400 */
+    --primary-foreground: 15 17 21;
+    --secondary: 161 161 170; /* zinc-400 */
+    --secondary-foreground: 229 231 235;
+    --muted: 113 113 122; /* zinc-500 */
+    --muted-foreground: 161 161 170;
+    --accent: 198 100% 58%;
+    --accent-foreground: 15 17 21;
+    --destructive: 345 83% 70%; /* rose-400 */
+    --destructive-foreground: 229 231 235;
+    --border: 255 255 255 / 0.1;
+    --input: 255 255 255 / 0.05;
+    --ring: 198 100% 58%;
+  }
+  
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply text-wave-text;
+    background: var(--bg);
+    background-image: var(--gradient-bg-main);
+    background-attachment: fixed;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent-1);
+    border-radius: 4px;
+  }
+  
+  /* Selection color */
+  ::selection {
+    background: rgba(34, 211, 238, 0.3);
+    color: white;
+  }
+}
+
+@layer components {
+  /* Wave Mockup Glass Effects */
+  .wave-glass {
+    backdrop-filter: blur(12px);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-brd);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+    position: relative;
+  }
+  
+  .wave-glass::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    pointer-events: none;
+  }
+  
+  /* Legacy glass support */
+  .glass {
+    @apply wave-glass;
+  }
+  
+  .glass-elev-1 {
+    background: var(--glass-bg);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--glass-brd);
+    border-radius: var(--radius);
+  }
+  
+  .glass-elev-2 {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-brd-strong);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+  }
+  
+  .glass-elev-3 {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(18px);
+    border: 1px solid var(--glass-brd-strong);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-2);
+  }
+  
+  .glass-hover {
+    transition: all var(--duration-fast) var(--spring-standard);
+  }
+  
+  .glass-hover:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--glass-brd-strong);
+    transform: translateY(-1px);
+  }
+
+  /* Status indicators */
+  .status-healthy {
+    color: var(--ok);
+    background: rgba(52, 211, 153, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    backdrop-filter: blur(6px);
+  }
+  
+  .status-warning {
+    color: var(--warning);
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    backdrop-filter: blur(6px);
+  }
+  
+  .status-critical {
+    color: var(--bad);
+    background: rgba(251, 113, 133, 0.1);
+    border: 1px solid rgba(251, 113, 133, 0.2);
+    backdrop-filter: blur(6px);
+  }
+  
+  .status-neutral {
+    color: var(--accent-1);
+    background: rgba(34, 211, 238, 0.1);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    backdrop-filter: blur(6px);
+  }
+  
+  /* Chart styles */
+  .chart-tooltip {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-brd-strong);
+    border-radius: 16px;
+    padding: 12px;
+    font-size: 0.875rem;
+    box-shadow: var(--shadow-1);
+  }
+  
+  /* Loading shimmer effect */
+  .shimmer {
+    background: linear-gradient(110deg, var(--glass-bg) 8%, rgba(255, 255, 255, 0.08) 18%, var(--glass-bg) 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  }
+  
+  .text-glow-cyan {
+    text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+  }
+  
+  .text-glow-purple {
+    text-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+  }
+  
+  .text-glow-emerald {
+    text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+  }
+  
+  /* Glow Effects */
+  .glow-cyan {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.25), var(--shadow-1);
+  }
+  
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(167, 139, 250, 0.25), var(--shadow-1);
+  }
+  
+  .glow-emerald {
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.25), var(--shadow-1);
+  }
+  
+  .glow-hover {
+    transition: all var(--duration-fast) var(--spring-standard);
+  }
+  
+  .glow-hover:hover {
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.4), var(--shadow-2);
+    transform: translateY(-1px);
+  }
+  
+  /* Legacy glow support */
+  .glow {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.25), var(--shadow-1);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .glass-hover {
+    transition: none;
+  }
+  
+  .glass-hover:hover {
+    transform: none;
+  }
+  
+  .shimmer {
+    animation: none;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Disable all motion animations */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

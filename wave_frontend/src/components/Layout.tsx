@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import { cn } from '../lib/utils'
 import { useWebSocket } from '../hooks/useWebSocket'
 import { Button } from './ui/button'
@@ -8,7 +9,6 @@ import {
   TrendingUp, 
   Activity, 
   Settings,
-  Waves,
   Wifi,
   WifiOff,
   Brain,
@@ -44,36 +44,49 @@ export const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div className="flex h-screen relative">
-      {/* Background overlay with nebula gradient */}
-      <div className="absolute inset-0 bg-nebula-gradient pointer-events-none"></div>
+      {/* Background with floating blobs - matches mockup exactly */}
+      <div className="min-h-screen w-full overflow-x-hidden text-wave-text bg-wave-main fixed inset-0">
+        <div className="pointer-events-none fixed inset-0 overflow-hidden">
+          <motion.div 
+            className="absolute -top-24 -left-16 h-80 w-80 rounded-full bg-cyan-500/20 blur-3xl" 
+            animate={{ y: [0, 20, 0] }} 
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} 
+          />
+          <motion.div 
+            className="absolute -top-10 right-0 h-96 w-96 rounded-full bg-fuchsia-500/20 blur-3xl" 
+            animate={{ y: [0, -15, 0], x: [0, 10, 0] }} 
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} 
+          />
+        </div>
+      </div>
       
       {/* Sidebar */}
-      <div className="w-64 glass-elev-2 border-r border-glass flex flex-col relative z-10">
+      <div className="w-64 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.35)] border-r border-white/10 flex flex-col relative z-10">
         {/* Logo */}
-        <div className="p-6 border-b border-glass">
+        <div className="p-6 border-b border-white/10">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-accent-cyan rounded-glass flex items-center justify-center glow-cyan text-xl">
+            <div className="w-8 h-8 bg-gradient-to-br from-cyan-400/80 to-fuchsia-400/80 rounded-2xl flex items-center justify-center text-xl">
               🌊
             </div>
             <div>
-              <h1 className="text-xl font-bold text-fg-primary text-glow-cyan">Wave</h1>
-              <p className="text-xs text-fg-secondary">Trading Platform</p>
+              <h1 className="text-xl font-bold text-zinc-200">Wave</h1>
+              <p className="text-xs text-zinc-400">Trading Platform</p>
             </div>
           </div>
         </div>
 
         {/* Connection Status */}
-        <div className="px-6 py-3 border-b border-glass">
+        <div className="px-6 py-3 border-b border-white/10">
           <div className="flex items-center space-x-2">
             {isConnected ? (
               <>
-                <Wifi className="w-4 h-4 text-accent-cyan" />
-                <span className="text-xs text-accent-cyan">Connected</span>
+                <Wifi className="w-4 h-4 text-cyan-400" />
+                <span className="text-xs text-cyan-400">Connected</span>
               </>
             ) : (
               <>
-                <WifiOff className="w-4 h-4 text-red-400" />
-                <span className="text-xs text-red-400 capitalize">{connectionStatus}</span>
+                <WifiOff className="w-4 h-4 text-rose-400" />
+                <span className="text-xs text-rose-400 capitalize">{connectionStatus}</span>
               </>
             )}
           </div>
@@ -90,12 +103,12 @@ export const Layout: React.FC<LayoutProps> = ({
                 key={item.id}
                 variant={isActive ? "default" : "ghost"}
                 className={cn(
-                  "w-full justify-start space-x-3 h-12 transition-all duration-micro",
-                  isActive ? "glass-elev-2 glow-cyan border-accent-cyan/20 text-fg-primary" : "glass-hover text-fg-secondary hover:text-fg-primary"
+                  "w-full justify-start space-x-3 h-12 transition-all duration-150",
+                  isActive ? "glass-elev-2 border-cyan-400/20 text-zinc-200 shadow-[0_0_20px_rgba(34,211,238,0.25)]" : "glass-hover text-zinc-400 hover:text-zinc-200"
                 )}
                 onClick={() => onNavigate(item.id)}
               >
-                <Icon className={cn("w-5 h-5", isActive ? "text-accent-cyan" : "")} />
+                <Icon className={cn("w-5 h-5", isActive ? "text-cyan-400" : "")} />
                 <span>{item.label}</span>
               </Button>
             )
@@ -103,8 +116,8 @@ export const Layout: React.FC<LayoutProps> = ({
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-glass">
-          <div className="text-xs text-fg-muted text-center">
+        <div className="p-4 border-t border-white/10">
+          <div className="text-xs text-zinc-500 text-center">
             Wave v2.0 - Advanced Trading
           </div>
         </div>
@@ -113,24 +126,24 @@ export const Layout: React.FC<LayoutProps> = ({
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         {/* Header */}
-        <header className="h-16 glass-elev-1 border-b border-glass flex items-center justify-between px-6">
+        <header className="h-16 glass-elev-1 border-b border-white/10 flex items-center justify-between px-6">
           <div>
-            <h2 className="text-lg font-semibold text-fg-primary capitalize">
+            <h2 className="text-lg font-semibold text-zinc-200 capitalize">
               {currentPage}
             </h2>
-            <p className="text-sm text-fg-secondary">
+            <p className="text-sm text-zinc-400">
               {getPageDescription(currentPage)}
             </p>
           </div>
           
           <div className="flex items-center space-x-4">
             {/* Status indicators */}
-            <div className="status-healthy px-3 py-1 rounded-glass text-xs font-medium">
+            <div className="px-3 py-1 rounded-2xl text-xs font-medium bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 backdrop-blur-sm">
               Paper Mode
             </div>
-            <div className="flex items-center space-x-2 glass-elev-1 px-3 py-1 rounded-glass">
-              <div className="w-2 h-2 bg-accent-cyan rounded-full animate-pulse"></div>
-              <span className="text-xs text-fg-secondary">Live</span>
+            <div className="flex items-center space-x-2 glass-elev-1 px-3 py-1 rounded-2xl">
+              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+              <span className="text-xs text-zinc-400">Live</span>
             </div>
           </div>
         </header>
