@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 
@@ -96,7 +96,7 @@ export default function LLMCenter() {
       setQueryResult(data);
     } catch (error) {
       console.error('Query failed:', error);
-      setQueryResult({ status: 'error', error: error.message });
+      setQueryResult({ status: 'error', error: error instanceof Error ? error.message : String(error) });
     }
     setLoading(false);
   };

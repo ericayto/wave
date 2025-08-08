@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WebSocketProvider } from './hooks/useWebSocket'
 import { Layout } from './components/Layout'
@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 30 * 1000, // 30 seconds
-      cacheTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 5 * 60 * 1000, // 5 minutes
       retry: (failureCount, error) => {
         // Don't retry on 404s or client errors
         if (error instanceof Error && error.message.includes('404')) {
@@ -57,7 +57,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <WebSocketProvider url="ws://localhost:8080/ws/stream">
-        <div className="min-h-screen bg-deep-900 text-white">
+        <div className="min-h-screen text-fg-primary">
           <Layout currentPage={currentPage} onNavigate={setCurrentPage}>
             {renderPage()}
           </Layout>

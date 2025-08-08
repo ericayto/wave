@@ -8,7 +8,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Design system variables
+        // Dark Glassmorphism Theme
+        'bg-base': 'var(--bg-base)',
+        'bg-elev': {
+          1: 'var(--bg-elev-1)',
+          2: 'var(--bg-elev-2)',
+          3: 'var(--bg-elev-3)',
+        },
+        'fg-primary': 'var(--fg-primary)',
+        'fg-secondary': 'var(--fg-secondary)',
+        'fg-muted': 'var(--fg-muted)',
+        'accent-cyan': 'var(--accent-cyan)',
+        'accent-purple': 'var(--accent-purple)',
+        'accent-emerald': 'var(--accent-emerald)',
+        'glow-cyan': 'var(--glow-cyan)',
+        'glow-purple': 'var(--glow-purple)',
+        'glow-emerald': 'var(--glow-emerald)',
+        'border-glass': 'var(--border-glass)',
+        'border-glass-strong': 'var(--border-glass-strong)',
+        
+        // Design system variables (legacy compatibility)
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -84,14 +103,43 @@ export default {
         }
       },
       backgroundImage: {
+        'glass-gradient': 'var(--gradient-glass)',
+        'bg-gradient': 'var(--gradient-bg)',
         'ocean-gradient': 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 25%, #0891b2 50%, #0e7490 75%, #164e63 100%)',
         'wave-gradient': 'linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #0891b2 100%)',
         'deep-gradient': 'linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #020617 100%)',
+        'nebula-gradient': 'radial-gradient(ellipse at top left, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.1) 25%, rgba(16, 185, 129, 0.05) 50%, transparent 100%)',
+      },
+      
+      backdropBlur: {
+        'glass-low': 'var(--blur-low)',
+        'glass-med': 'var(--blur-med)', 
+        'glass-high': 'var(--blur-high)',
+      },
+      
+      boxShadow: {
+        'glass': 'var(--shadow-glass)',
+        'elevated': 'var(--shadow-elevated)',
+        'glow-cyan': '0 0 20px var(--glow-cyan)',
+        'glow-purple': '0 0 20px var(--glow-purple)',
+        'glow-emerald': '0 0 20px var(--glow-emerald)',
+      },
+      
+      transitionTimingFunction: {
+        'glass': 'var(--ease-standard)',
+        'emphasized': 'var(--ease-emphasized)',
+      },
+      
+      transitionDuration: {
+        'micro': 'var(--dur-micro)',
+        'overlay': 'var(--dur-overlay)',
       },
       animation: {
         'wave': 'wave 3s ease-in-out infinite',
         'float': 'float 6s ease-in-out infinite',
         'ripple': 'ripple 2s ease-out infinite',
+        'glass-shimmer': 'glass-shimmer 2s infinite',
+        'glow-pulse': 'glow-pulse 2s ease-in-out infinite alternate',
       },
       keyframes: {
         wave: {
@@ -106,10 +154,24 @@ export default {
           '0%': { transform: 'scale(0)', opacity: 1 },
           '100%': { transform: 'scale(4)', opacity: 0 },
         },
+        'glass-shimmer': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        'glow-pulse': {
+          '0%': { boxShadow: '0 0 20px var(--glow-cyan)' },
+          '100%': { boxShadow: '0 0 40px var(--glow-cyan), 0 0 60px var(--glow-cyan)' },
+        },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        mono: ['JetBrains Mono', 'Consolas', 'monospace'],
+      },
+      
+      borderRadius: {
+        'glass': '16px',
+        'glass-sm': '12px', 
+        'glass-lg': '24px',
       },
     },
   },

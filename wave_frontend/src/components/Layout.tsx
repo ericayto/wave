@@ -43,29 +43,32 @@ export const Layout: React.FC<LayoutProps> = ({
   const { isConnected, connectionStatus } = useWebSocket()
 
   return (
-    <div className="flex h-screen bg-deep-900">
+    <div className="flex h-screen relative">
+      {/* Background overlay with nebula gradient */}
+      <div className="absolute inset-0 bg-nebula-gradient pointer-events-none"></div>
+      
       {/* Sidebar */}
-      <div className="w-64 glass border-r border-white/10 flex flex-col">
+      <div className="w-64 glass-elev-2 border-r border-glass flex flex-col relative z-10">
         {/* Logo */}
-        <div className="p-6 border-b border-white/10">
+        <div className="p-6 border-b border-glass">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-ocean-gradient rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-accent-cyan rounded-glass flex items-center justify-center glow-cyan">
               <Waves className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">Wave</h1>
-              <p className="text-xs text-gray-400">Trading Bot</p>
+              <h1 className="text-xl font-bold text-fg-primary text-glow-cyan">Nebula</h1>
+              <p className="text-xs text-fg-secondary">Trading Platform</p>
             </div>
           </div>
         </div>
 
         {/* Connection Status */}
-        <div className="px-6 py-3 border-b border-white/10">
+        <div className="px-6 py-3 border-b border-glass">
           <div className="flex items-center space-x-2">
             {isConnected ? (
               <>
-                <Wifi className="w-4 h-4 text-green-400" />
-                <span className="text-xs text-green-400">Connected</span>
+                <Wifi className="w-4 h-4 text-accent-emerald" />
+                <span className="text-xs text-accent-emerald">Connected</span>
               </>
             ) : (
               <>
@@ -87,12 +90,12 @@ export const Layout: React.FC<LayoutProps> = ({
                 key={item.id}
                 variant={isActive ? "default" : "ghost"}
                 className={cn(
-                  "w-full justify-start space-x-3 h-12",
-                  isActive && "glow"
+                  "w-full justify-start space-x-3 h-12 transition-all duration-micro",
+                  isActive ? "glass-elev-2 glow-cyan border-accent-cyan/20 text-fg-primary" : "glass-hover text-fg-secondary hover:text-fg-primary"
                 )}
                 onClick={() => onNavigate(item.id)}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className={cn("w-5 h-5", isActive ? "text-accent-cyan" : "")} />
                 <span>{item.label}</span>
               </Button>
             )
@@ -100,30 +103,34 @@ export const Layout: React.FC<LayoutProps> = ({
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-white/10">
-          <div className="text-xs text-gray-500 text-center">
-            Wave v0.2.0 M2 - Paper Mode + LLM
+        <div className="p-4 border-t border-glass">
+          <div className="text-xs text-fg-muted text-center">
+            Nebula v2.0 - Advanced Trading
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         {/* Header */}
-        <header className="h-16 glass border-b border-white/10 flex items-center justify-between px-6">
+        <header className="h-16 glass-elev-1 border-b border-glass flex items-center justify-between px-6">
           <div>
-            <h2 className="text-lg font-semibold text-white capitalize">
+            <h2 className="text-lg font-semibold text-fg-primary capitalize">
               {currentPage}
             </h2>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-fg-secondary">
               {getPageDescription(currentPage)}
             </p>
           </div>
           
           <div className="flex items-center space-x-4">
-            {/* Status indicators can go here */}
-            <div className="status-healthy px-3 py-1 rounded-full text-xs font-medium">
+            {/* Status indicators */}
+            <div className="status-healthy px-3 py-1 rounded-glass text-xs font-medium">
               Paper Mode
+            </div>
+            <div className="flex items-center space-x-2 glass-elev-1 px-3 py-1 rounded-glass">
+              <div className="w-2 h-2 bg-accent-emerald rounded-full animate-pulse"></div>
+              <span className="text-xs text-fg-secondary">Live</span>
             </div>
           </div>
         </header>
@@ -142,21 +149,21 @@ export const Layout: React.FC<LayoutProps> = ({
 function getPageDescription(page: string): string {
   switch (page) {
     case 'dashboard':
-      return 'Overview of your trading bot performance'
+      return 'Portfolio overview and market insights'
     case 'portfolio':
-      return 'Your balances, positions, and P&L'
+      return 'Your assets, positions, and performance'
     case 'strategies':
-      return 'Manage and configure trading strategies'
+      return 'Trading strategies and algorithms'
     case 'trading':
-      return 'Orders, trades, and execution history'
+      return 'Live trading and order management'
     case 'llm-center':
-      return 'LLM control, planning, and query interface'
+      return 'AI-powered trading intelligence'
     case 'strategy-generator':
-      return 'Generate strategies from natural language'
+      return 'Generate strategies with AI'
     case 'memory-inspector':
-      return 'Memory, context, and RAG management'
+      return 'System memory and context'
     case 'settings':
-      return 'Configuration and system settings'
+      return 'Platform configuration'
     default:
       return ''
   }

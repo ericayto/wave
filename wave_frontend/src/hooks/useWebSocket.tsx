@@ -27,7 +27,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({
   maxReconnectAttempts = 5,
 }) => {
   const ws = useRef<WebSocket | null>(null)
-  const reconnectTimeoutId = useRef<NodeJS.Timeout | null>(null)
+  const reconnectTimeoutId = useRef<number | null>(null)
   const reconnectAttempts = useRef(0)
   
   const [isConnected, setIsConnected] = useState(false)

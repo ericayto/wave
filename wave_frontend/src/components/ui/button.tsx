@@ -3,24 +3,24 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "../../lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ripple",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-glass text-sm font-medium ring-offset-background transition-all duration-micro focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ripple",
   {
     variants: {
       variant: {
-        default: "bg-ocean-600 text-white hover:bg-ocean-700 glow-hover",
+        default: "glass-elev-2 text-fg-primary hover:glass-elev-3 glow-cyan border-accent-cyan/20",
         destructive:
-          "bg-red-500 text-white hover:bg-red-600",
+          "glass-elev-2 text-red-400 hover:glass-elev-3 border-red-400/20 hover:glow-emerald",
         outline:
-          "border border-ocean-600 bg-transparent hover:bg-ocean-600 hover:text-white",
+          "glass-elev-1 border border-accent-cyan/30 text-accent-cyan hover:glass-elev-2 hover:border-accent-cyan/50",
         secondary:
-          "bg-wave-600 text-white hover:bg-wave-700",
-        ghost: "hover:bg-white/10 hover:text-white",
-        link: "text-ocean-400 underline-offset-4 hover:underline",
+          "glass-elev-2 text-fg-secondary hover:glass-elev-3 hover:text-fg-primary border-fg-secondary/20",
+        ghost: "hover:glass-elev-1 hover:text-fg-primary text-fg-secondary",
+        link: "text-accent-cyan underline-offset-4 hover:underline hover:text-glow-cyan",
       },
       size: {
         default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
+        sm: "h-9 rounded-glass-sm px-3",
+        lg: "h-11 rounded-glass-lg px-8",
         icon: "h-10 w-10",
       },
     },
