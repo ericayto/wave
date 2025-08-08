@@ -79,3 +79,61 @@ echo = false  # SQL logging
 default_symbols = ["BTC/USDT", "ETH/USDT"]
 default_timeframe = "5m"
 max_active_strategies = 5
+
+# M3 Advanced Configuration
+
+[optimization]
+enabled = true
+genetic_algorithm_generations = 100
+genetic_algorithm_population = 50
+bayesian_optimization_iterations = 200
+parallel_optimization_workers = 4
+cache_optimization_results = true
+
+[portfolio]
+max_strategies = 20
+rebalancing_frequency = "weekly"
+risk_parity_enabled = true
+correlation_limit = 0.7
+drawdown_rebalance_threshold = 0.05
+max_single_strategy_weight = 0.4
+min_strategy_weight = 0.01
+rebalance_deviation_threshold = 0.05
+
+[reporting]
+generate_daily_reports = true
+generate_monthly_reports = true
+export_formats = ["pdf", "csv", "json"]
+report_retention_days = 365
+scheduled_reports_enabled = true
+performance_benchmark = "market"
+
+[live_trading]
+enabled = false  # Still evaluation phase
+max_position_value = 1000.0  # USD
+emergency_stop_drawdown = 0.10
+pre_trade_checks_timeout = 1000  # ms
+position_monitoring_frequency = 1  # seconds
+slippage_tolerance_bps = 10
+
+[performance]
+calculate_advanced_metrics = true
+regime_detection_enabled = true
+stress_testing_enabled = true
+monte_carlo_simulations = 1000
+walk_forward_enabled = true
+walk_forward_window_months = 12
+walk_forward_step_months = 1
+
+[backtesting]
+default_lookback_days = 365
+enable_walk_forward = true
+enable_monte_carlo = true
+enable_stress_testing = true
+max_concurrent_backtests = 4
+
+[analytics]
+performance_cache_ttl_minutes = 60
+regime_detection_lookback_days = 252
+correlation_analysis_enabled = true
+attribution_analysis_enabled = true
