@@ -8,7 +8,6 @@ import {
   TrendingUp, 
   Activity, 
   Settings,
-  Waves,
   Wifi,
   WifiOff,
   Brain,
