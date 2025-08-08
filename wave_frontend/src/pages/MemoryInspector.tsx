@@ -210,26 +210,26 @@ export default function MemoryInspector() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-ocean-100">💭 Memory Inspector</h1>
+        <h1 className="text-3xl font-bold text-fg-primary">💭 Memory Inspector</h1>
       </div>
 
       {/* Memory Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats && (
           <>
-            <Card className="p-4 bg-gradient-to-br from-ocean-800 to-ocean-900 border-ocean-700">
-              <h3 className="font-semibold text-ocean-100 mb-2">Index Size</h3>
-              <div className="text-2xl font-bold text-ocean-300">{stats.faiss_index_size}</div>
-              <div className="text-xs text-ocean-400">Embeddings</div>
+            <Card className="p-4 glass-elev-2 border-glass">
+              <h3 className="font-semibold text-fg-primary mb-2">Index Size</h3>
+              <div className="text-2xl font-bold text-fg-secondary">{stats.faiss_index_size}</div>
+              <div className="text-xs text-fg-muted">Embeddings</div>
             </Card>
 
-            <Card className="p-4 bg-gradient-to-br from-wave-800 to-wave-900 border-wave-700">
+            <Card className="p-4 glass-elev-2 border-glass">
               <h3 className="font-semibold text-wave-100 mb-2">Cache Size</h3>
               <div className="text-2xl font-bold text-wave-300">{stats.embedding_cache_size}</div>
               <div className="text-xs text-wave-400">Cached Vectors</div>
             </Card>
 
-            <Card className="p-4 bg-gradient-to-br from-deep-800 to-deep-900 border-deep-700">
+            <Card className="p-4 glass-elev-2 border-glass">
               <h3 className="font-semibold text-deep-100 mb-2">Context Budget</h3>
               <div className="text-lg font-bold text-deep-300">
                 {(stats.budget.target_window_tokens / 1000).toFixed(0)}K / {(stats.budget.max_context_tokens / 1000).toFixed(0)}K
@@ -237,18 +237,18 @@ export default function MemoryInspector() {
               <div className="text-xs text-deep-400">Tokens</div>
             </Card>
 
-            <Card className="p-4 bg-gradient-to-br from-ocean-800 to-wave-900 border-ocean-700">
-              <h3 className="font-semibold text-ocean-100 mb-2">RAG Top-K</h3>
-              <div className="text-2xl font-bold text-ocean-300">{stats.budget.rag_top_k}</div>
-              <div className="text-xs text-ocean-400">Retrieved Memories</div>
+            <Card className="p-4 glass-elev-2 border-glass">
+              <h3 className="font-semibold text-fg-primary mb-2">RAG Top-K</h3>
+              <div className="text-2xl font-bold text-fg-secondary">{stats.budget.rag_top_k}</div>
+              <div className="text-xs text-fg-muted">Retrieved Memories</div>
             </Card>
           </>
         )}
       </div>
 
       {/* Memory Search */}
-      <Card className="p-6 bg-gradient-to-br from-ocean-800 to-ocean-900 border-ocean-700">
-        <h3 className="text-xl font-semibold text-ocean-100 mb-4">🔍 Memory Search (RAG)</h3>
+      <Card className="p-6 glass-elev-2 border-glass">
+        <h3 className="text-xl font-semibold text-fg-primary mb-4">🔍 Memory Search (RAG)</h3>
         
         <div className="space-y-4">
           <div className="flex space-x-4">
@@ -257,26 +257,26 @@ export default function MemoryInspector() {
               value={memoryQuery}
               onChange={(e) => setMemoryQuery(e.target.value)}
               placeholder="Search memories (e.g., 'bitcoin trading decisions')"
-              className="flex-1 px-3 py-2 bg-ocean-900 border border-ocean-700 rounded-md text-ocean-100 placeholder-ocean-400 focus:outline-none focus:ring-2 focus:ring-ocean-500"
+              className="flex-1 px-3 py-2 glass-elev-1 border border-glass rounded-md text-fg-primary placeholder-ocean-400 focus:outline-none focus:ring-2 focus:ring-ocean-500"
             />
-            <Button onClick={searchMemories} className="bg-ocean-600 hover:bg-ocean-700">
+            <Button onClick={searchMemories} className="bg-accent-cyan hover:bg-accent-cyan/90">
               Search
             </Button>
           </div>
 
           {memories.length > 0 && (
             <div className="space-y-3 max-h-96 overflow-y-auto">
-              <h4 className="font-medium text-ocean-200">Search Results:</h4>
+              <h4 className="font-medium text-fg-primary">Search Results:</h4>
               {memories.map((memory) => (
-                <div key={memory.id} className="p-3 bg-ocean-900 border border-ocean-700 rounded">
+                <div key={memory.id} className="p-3 glass-elev-1 border border-glass rounded">
                   <div className="flex items-center justify-between mb-2">
                     <span className={`px-2 py-1 text-xs rounded ${getEventTypeColor(memory.type)} text-white`}>
                       {memory.type}
                     </span>
-                    <div className="text-xs text-ocean-400">{formatTimestamp(memory.timestamp)}</div>
+                    <div className="text-xs text-fg-muted">{formatTimestamp(memory.timestamp)}</div>
                   </div>
-                  <div className="text-sm text-ocean-200 mb-2">{memory.content}</div>
-                  <div className="text-xs text-ocean-400">
+                  <div className="text-sm text-fg-primary mb-2">{memory.content}</div>
+                  <div className="text-xs text-fg-muted">
                     Relevance: {(memory.relevance_score * 100).toFixed(1)}%
                   </div>
                 </div>
@@ -288,7 +288,7 @@ export default function MemoryInspector() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Pinned Facts */}
-        <Card className="p-6 bg-gradient-to-br from-wave-800 to-wave-900 border-wave-700">
+        <Card className="p-6 glass-elev-2 border-glass">
           <h3 className="text-xl font-semibold text-wave-100 mb-4">📌 Pinned Facts</h3>
           
           {/* Add new fact */}
@@ -350,7 +350,7 @@ export default function MemoryInspector() {
         </Card>
 
         {/* Recent Events */}
-        <Card className="p-6 bg-gradient-to-br from-deep-800 to-deep-900 border-deep-700">
+        <Card className="p-6 glass-elev-2 border-glass">
           <h3 className="text-xl font-semibold text-deep-100 mb-4">🕐 Recent Events</h3>
           
           <div className="space-y-2 max-h-96 overflow-y-auto">
@@ -377,11 +377,11 @@ export default function MemoryInspector() {
 
       {/* Context State */}
       {contextState && (
-        <Card className="p-6 bg-gradient-to-br from-ocean-800 to-deep-900 border-ocean-700">
-          <h3 className="text-xl font-semibold text-ocean-100 mb-4">🧠 Current Context State</h3>
+        <Card className="p-6 glass-elev-2 border-glass">
+          <h3 className="text-xl font-semibold text-fg-primary mb-4">🧠 Current Context State</h3>
           
-          <div className="bg-ocean-900 border border-ocean-700 rounded p-4 overflow-x-auto">
-            <pre className="text-ocean-200 text-sm">
+          <div className="glass-elev-1 border border-glass rounded p-4 overflow-x-auto">
+            <pre className="text-fg-primary text-sm">
               {JSON.stringify(contextState, null, 2)}
             </pre>
           </div>

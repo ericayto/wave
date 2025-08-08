@@ -98,20 +98,20 @@ export const Dashboard: React.FC = () => {
         </Card>
 
         {/* Daily P&L */}
-        <Card className="glow-hover hover:glow-emerald">
+        <Card className="glow-hover hover:glow-cyan">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-fg-secondary">
               Daily P&L
             </CardTitle>
             {metrics && metrics.daily_pnl >= 0 ? (
-              <TrendingUp className="h-4 w-4 text-accent-emerald" />
+              <TrendingUp className="h-4 w-4 text-accent-cyan" />
             ) : (
               <TrendingDown className="h-4 w-4 text-red-400" />
             )}
           </CardHeader>
           <CardContent>
             <div className={`text-2xl font-bold ${
-              metrics && metrics.daily_pnl >= 0 ? 'text-accent-emerald' : 'text-red-400'
+              metrics && metrics.daily_pnl >= 0 ? 'text-accent-cyan' : 'text-red-400'
             }`}>
               {metrics ? formatCurrency(metrics.daily_pnl) : '$0.00'}
             </div>
@@ -140,18 +140,18 @@ export const Dashboard: React.FC = () => {
         </Card>
 
         {/* Risk Score */}
-        <Card className="glow-hover hover:glow-emerald">
+        <Card className="glow-hover hover:glow-cyan">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-fg-secondary">
               Risk Score
             </CardTitle>
-            <Shield className="h-4 w-4 text-accent-emerald" />
+            <Shield className="h-4 w-4 text-accent-cyan" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-accent-emerald">
+            <div className="text-2xl font-bold text-accent-cyan">
               {metrics?.risk_score ?? 0}/100
             </div>
-            <p className="text-xs text-accent-emerald mt-1">
+            <p className="text-xs text-accent-cyan mt-1">
               Low Risk
             </p>
           </CardContent>
@@ -171,7 +171,7 @@ export const Dashboard: React.FC = () => {
               <div>
                 <div className="font-medium text-fg-primary">Wave Trading Bot</div>
                 <div className="text-sm text-fg-secondary capitalize">
-                  Status: <span className="text-accent-emerald">{metrics?.bot_status ?? 'Ready'}</span>
+                  Status: <span className="text-accent-cyan">{metrics?.bot_status ?? 'Ready'}</span>
                 </div>
               </div>
             </div>
@@ -236,7 +236,7 @@ export const Dashboard: React.FC = () => {
               <p className="text-xs text-fg-secondary">Select or create a trading strategy</p>
             </div>
             <div className="glass-elev-1 p-4 rounded-glass text-center hover:glass-elev-2 transition-all duration-micro">
-              <Bot className="w-8 h-8 text-accent-emerald mx-auto mb-2" />
+              <Bot className="w-8 h-8 text-accent-cyan mx-auto mb-2" />
               <h3 className="font-medium text-fg-primary mb-1">3. Start Trading</h3>
               <p className="text-xs text-fg-secondary">Begin paper trading with your bot</p>
             </div>
