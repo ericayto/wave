@@ -303,16 +303,23 @@
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  .wave-effect::before {
-    animation: none;
+  .glass-hover {
+    transition: none;
   }
   
-  .float {
-    animation: none;
+  .glass-hover:hover {
+    transform: none;
   }
   
   .shimmer {
     animation: none;
-    background: #334155;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Disable framer motion animations */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
