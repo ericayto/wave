@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #0f1115;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-brd: rgba(255, 255, 255, 0.10);
+    --text: #e5e7eb;
+    --text-secondary: #a1a1aa;
+    --accent-1: #22d3ee;
+    --accent-2: #a78bfa;
+    --ok: #34d399;
+    --bad: #fb7185;
+    --shadow-1: 0 10px 40px rgba(0, 0, 0, 0.35);
+    --radius: 1rem;
+    
+    --gradient-bg-main: radial-gradient(60% 60% at 20% 10%, rgba(0, 120, 255, 0.25), transparent), radial-gradient(60% 60% at 80% 0%, rgba(168, 85, 247, 0.18), transparent), linear-gradient(180deg, #0a0a0b, #0f1115);
+  }
+  
+  body {
+    background: var(--bg);
+    background-image: var(--gradient-bg-main);
+    color: var(--text);
+  }
+}
+
+@layer components {
+  .wave-glass {
+    backdrop-filter: blur(12px);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-brd);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+  }
+  
+  .glass-elev-1 {
+    background: var(--glass-bg);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--glass-brd);
+    border-radius: var(--radius);
+  }
+  
+  .glass-elev-2 {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+  }
+}
