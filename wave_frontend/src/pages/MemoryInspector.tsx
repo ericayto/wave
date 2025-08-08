@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Button } from '../components/ui/button';
-import { Card } from '../components/ui/card';
 
 interface MemoryStats {
   faiss_index_size: number;
@@ -210,182 +210,236 @@ export default function MemoryInspector() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-fg-primary">💭 Memory Inspector</h1>
+        <h1 className="text-3xl font-bold text-zinc-200">💭 Memory Inspector</h1>
       </div>
 
       {/* Memory Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats && (
           <>
-            <Card className="p-4 glass-elev-2 border-glass">
-              <h3 className="font-semibold text-fg-primary mb-2">Index Size</h3>
-              <div className="text-2xl font-bold text-fg-secondary">{stats.faiss_index_size}</div>
-              <div className="text-xs text-fg-muted">Embeddings</div>
-            </Card>
-
-            <Card className="p-4 glass-elev-2 border-glass">
-              <h3 className="font-semibold text-wave-100 mb-2">Cache Size</h3>
-              <div className="text-2xl font-bold text-wave-300">{stats.embedding_cache_size}</div>
-              <div className="text-xs text-wave-400">Cached Vectors</div>
-            </Card>
-
-            <Card className="p-4 glass-elev-2 border-glass">
-              <h3 className="font-semibold text-deep-100 mb-2">Context Budget</h3>
-              <div className="text-lg font-bold text-deep-300">
-                {(stats.budget.target_window_tokens / 1000).toFixed(0)}K / {(stats.budget.max_context_tokens / 1000).toFixed(0)}K
+            <motion.div 
+              whileHover={{ y: -2, scale: 1.01 }} 
+              whileTap={{ scale: 0.997 }} 
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            >
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:bg-white/10 transition-colors p-4">
+                <h3 className="font-semibold text-zinc-200 mb-2">Index Size</h3>
+                <div className="text-2xl font-bold text-zinc-400">{stats.faiss_index_size}</div>
+                <div className="text-xs text-zinc-500">Embeddings</div>
               </div>
-              <div className="text-xs text-deep-400">Tokens</div>
-            </Card>
+            </motion.div>
 
-            <Card className="p-4 glass-elev-2 border-glass">
-              <h3 className="font-semibold text-fg-primary mb-2">RAG Top-K</h3>
-              <div className="text-2xl font-bold text-fg-secondary">{stats.budget.rag_top_k}</div>
-              <div className="text-xs text-fg-muted">Retrieved Memories</div>
-            </Card>
+            <motion.div 
+              whileHover={{ y: -2, scale: 1.01 }} 
+              whileTap={{ scale: 0.997 }} 
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            >
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:bg-white/10 transition-colors p-4">
+                <h3 className="font-semibold text-zinc-200 mb-2">Cache Size</h3>
+                <div className="text-2xl font-bold text-zinc-400">{stats.embedding_cache_size}</div>
+                <div className="text-xs text-zinc-500">Cached Vectors</div>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              whileHover={{ y: -2, scale: 1.01 }} 
+              whileTap={{ scale: 0.997 }} 
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            >
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:bg-white/10 transition-colors p-4">
+                <h3 className="font-semibold text-zinc-200 mb-2">Context Budget</h3>
+                <div className="text-lg font-bold text-zinc-400">
+                  {(stats.budget.target_window_tokens / 1000).toFixed(0)}K / {(stats.budget.max_context_tokens / 1000).toFixed(0)}K
+                </div>
+                <div className="text-xs text-zinc-500">Tokens</div>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              whileHover={{ y: -2, scale: 1.01 }} 
+              whileTap={{ scale: 0.997 }} 
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            >
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:bg-white/10 transition-colors p-4">
+                <h3 className="font-semibold text-zinc-200 mb-2">RAG Top-K</h3>
+                <div className="text-2xl font-bold text-zinc-400">{stats.budget.rag_top_k}</div>
+                <div className="text-xs text-zinc-500">Retrieved Memories</div>
+              </div>
+            </motion.div>
           </>
         )}
       </div>
 
       {/* Memory Search */}
-      <Card className="p-6 glass-elev-2 border-glass">
-        <h3 className="text-xl font-semibold text-fg-primary mb-4">🔍 Memory Search (RAG)</h3>
-        
-        <div className="space-y-4">
-          <div className="flex space-x-4">
-            <input
-              type="text"
-              value={memoryQuery}
-              onChange={(e) => setMemoryQuery(e.target.value)}
-              placeholder="Search memories (e.g., 'bitcoin trading decisions')"
-              className="flex-1 px-3 py-2 glass-elev-1 border border-glass rounded-md text-fg-primary placeholder-ocean-400 focus:outline-none focus:ring-2 focus:ring-ocean-500"
-            />
-            <Button onClick={searchMemories} className="bg-accent-cyan hover:bg-accent-cyan/90">
-              Search
-            </Button>
-          </div>
-
-          {memories.length > 0 && (
-            <div className="space-y-3 max-h-96 overflow-y-auto">
-              <h4 className="font-medium text-fg-primary">Search Results:</h4>
-              {memories.map((memory) => (
-                <div key={memory.id} className="p-3 glass-elev-1 border border-glass rounded">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className={`px-2 py-1 text-xs rounded ${getEventTypeColor(memory.type)} text-white`}>
-                      {memory.type}
-                    </span>
-                    <div className="text-xs text-fg-muted">{formatTimestamp(memory.timestamp)}</div>
-                  </div>
-                  <div className="text-sm text-fg-primary mb-2">{memory.content}</div>
-                  <div className="text-xs text-fg-muted">
-                    Relevance: {(memory.relevance_score * 100).toFixed(1)}%
-                  </div>
-                </div>
-              ))}
+      <motion.div 
+        whileHover={{ y: -2, scale: 1.01 }} 
+        whileTap={{ scale: 0.997 }} 
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+      >
+        <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:bg-white/10 transition-colors p-6">
+          <h3 className="text-xl font-semibold text-zinc-200 mb-4">🔍 Memory Search (RAG)</h3>
+          
+          <div className="space-y-4">
+            <div className="flex space-x-4">
+              <input
+                type="text"
+                value={memoryQuery}
+                onChange={(e) => setMemoryQuery(e.target.value)}
+                placeholder="Search memories (e.g., 'bitcoin trading decisions')"
+                className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-md text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              />
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button onClick={searchMemories} className="bg-cyan-400 hover:bg-cyan-500 text-zinc-900">
+                  Search
+                </Button>
+              </motion.div>
             </div>
-          )}
+
+            {memories.length > 0 && (
+              <div className="space-y-3 max-h-96 overflow-y-auto">
+                <h4 className="font-medium text-zinc-200">Search Results:</h4>
+                {memories.map((memory) => (
+                  <div key={memory.id} className="p-3 bg-white/5 border border-white/10 rounded">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className={`px-2 py-1 text-xs rounded ${getEventTypeColor(memory.type)} text-white`}>
+                        {memory.type}
+                      </span>
+                      <div className="text-xs text-zinc-500">{formatTimestamp(memory.timestamp)}</div>
+                    </div>
+                    <div className="text-sm text-zinc-200 mb-2">{memory.content}</div>
+                    <div className="text-xs text-zinc-500">
+                      Relevance: {(memory.relevance_score * 100).toFixed(1)}%
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </Card>
+      </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Pinned Facts */}
-        <Card className="p-6 glass-elev-2 border-glass">
-          <h3 className="text-xl font-semibold text-wave-100 mb-4">📌 Pinned Facts</h3>
-          
-          {/* Add new fact */}
-          <div className="space-y-3 mb-6 p-4 bg-wave-900 border border-wave-700 rounded">
-            <h4 className="font-medium text-wave-200">Add New Fact</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <motion.div 
+          whileHover={{ y: -2, scale: 1.01 }} 
+          whileTap={{ scale: 0.997 }} 
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        >
+          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:bg-white/10 transition-colors p-6">
+            <h3 className="text-xl font-semibold text-zinc-200 mb-4">📌 Pinned Facts</h3>
+            
+            {/* Add new fact */}
+            <div className="space-y-3 mb-6 p-4 bg-white/5 border border-white/10 rounded">
+              <h4 className="font-medium text-zinc-200">Add New Fact</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <input
+                  type="text"
+                  value={newFactKey}
+                  onChange={(e) => setNewFactKey(e.target.value)}
+                  placeholder="Key"
+                  className="px-3 py-2 bg-white/5 border border-white/10 rounded text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                />
+                <input
+                  type="number"
+                  value={factTTL}
+                  onChange={(e) => setFactTTL(e.target.value)}
+                  placeholder="TTL (seconds, optional)"
+                  className="px-3 py-2 bg-white/5 border border-white/10 rounded text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                />
+              </div>
               <input
                 type="text"
-                value={newFactKey}
-                onChange={(e) => setNewFactKey(e.target.value)}
-                placeholder="Key"
-                className="px-3 py-2 bg-wave-800 border border-wave-600 rounded text-wave-100 placeholder-wave-400 focus:outline-none focus:ring-2 focus:ring-wave-500"
+                value={newFactValue}
+                onChange={(e) => setNewFactValue(e.target.value)}
+                placeholder="Value (JSON or string)"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
               />
-              <input
-                type="number"
-                value={factTTL}
-                onChange={(e) => setFactTTL(e.target.value)}
-                placeholder="TTL (seconds, optional)"
-                className="px-3 py-2 bg-wave-800 border border-wave-600 rounded text-wave-100 placeholder-wave-400 focus:outline-none focus:ring-2 focus:ring-wave-500"
-              />
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button onClick={pinFact} size="sm" className="bg-cyan-400 hover:bg-cyan-500 text-zinc-900">
+                  Pin Fact
+                </Button>
+              </motion.div>
             </div>
-            <input
-              type="text"
-              value={newFactValue}
-              onChange={(e) => setNewFactValue(e.target.value)}
-              placeholder="Value (JSON or string)"
-              className="w-full px-3 py-2 bg-wave-800 border border-wave-600 rounded text-wave-100 placeholder-wave-400 focus:outline-none focus:ring-2 focus:ring-wave-500"
-            />
-            <Button onClick={pinFact} size="sm" className="bg-wave-600 hover:bg-wave-700">
-              Pin Fact
-            </Button>
-          </div>
 
-          {/* Current facts */}
-          <div className="space-y-2">
-            {Object.keys(pinnedFacts).length > 0 ? (
-              Object.entries(pinnedFacts).map(([key, value]) => (
-                <div key={key} className="flex items-center justify-between p-3 bg-wave-900 border border-wave-700 rounded">
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium text-wave-100">{key}</div>
-                    <div className="text-sm text-wave-300 truncate">
-                      {typeof value === 'string' ? value : JSON.stringify(value)}
+            {/* Current facts */}
+            <div className="space-y-2">
+              {Object.keys(pinnedFacts).length > 0 ? (
+                Object.entries(pinnedFacts).map(([key, value]) => (
+                  <div key={key} className="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded">
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-zinc-200">{key}</div>
+                      <div className="text-sm text-zinc-400 truncate">
+                        {typeof value === 'string' ? value : JSON.stringify(value)}
+                      </div>
                     </div>
+                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                      <Button 
+                        onClick={() => unpinFact(key)}
+                        size="sm" 
+                        variant="outline"
+                        className="ml-2 border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+                      >
+                        Unpin
+                      </Button>
+                    </motion.div>
                   </div>
-                  <Button 
-                    onClick={() => unpinFact(key)}
-                    size="sm" 
-                    variant="outline"
-                    className="ml-2 border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
-                  >
-                    Unpin
-                  </Button>
-                </div>
-              ))
-            ) : (
-              <div className="text-wave-400 text-center py-4">No pinned facts</div>
-            )}
+                ))
+              ) : (
+                <div className="text-zinc-500 text-center py-4">No pinned facts</div>
+              )}
+            </div>
           </div>
-        </Card>
+        </motion.div>
 
         {/* Recent Events */}
-        <Card className="p-6 glass-elev-2 border-glass">
-          <h3 className="text-xl font-semibold text-deep-100 mb-4">🕐 Recent Events</h3>
-          
-          <div className="space-y-2 max-h-96 overflow-y-auto">
-            {recentEvents.length > 0 ? (
-              recentEvents.map((event) => (
-                <div key={event.id} className="p-3 bg-deep-900 border border-deep-700 rounded">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className={`px-2 py-1 text-xs rounded ${getEventTypeColor(event.type)} text-white`}>
-                      {event.type}
-                    </span>
-                    <div className="text-xs text-deep-400">{formatTimestamp(event.timestamp)}</div>
+        <motion.div 
+          whileHover={{ y: -2, scale: 1.01 }} 
+          whileTap={{ scale: 0.997 }} 
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        >
+          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:bg-white/10 transition-colors p-6">
+            <h3 className="text-xl font-semibold text-zinc-200 mb-4">🕐 Recent Events</h3>
+            
+            <div className="space-y-2 max-h-96 overflow-y-auto">
+              {recentEvents.length > 0 ? (
+                recentEvents.map((event) => (
+                  <div key={event.id} className="p-3 bg-white/5 border border-white/10 rounded">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className={`px-2 py-1 text-xs rounded ${getEventTypeColor(event.type)} text-white`}>
+                        {event.type}
+                      </span>
+                      <div className="text-xs text-zinc-500">{formatTimestamp(event.timestamp)}</div>
+                    </div>
+                    <div className="text-sm text-zinc-200">
+                      <pre className="whitespace-pre-wrap">{JSON.stringify(event.payload, null, 2)}</pre>
+                    </div>
                   </div>
-                  <div className="text-sm text-deep-200">
-                    <pre className="whitespace-pre-wrap">{JSON.stringify(event.payload, null, 2)}</pre>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="text-deep-400 text-center py-4">No recent events</div>
-            )}
+                ))
+              ) : (
+                <div className="text-zinc-500 text-center py-4">No recent events</div>
+              )}
+            </div>
           </div>
-        </Card>
+        </motion.div>
       </div>
 
       {/* Context State */}
       {contextState && (
-        <Card className="p-6 glass-elev-2 border-glass">
-          <h3 className="text-xl font-semibold text-fg-primary mb-4">🧠 Current Context State</h3>
-          
-          <div className="glass-elev-1 border border-glass rounded p-4 overflow-x-auto">
-            <pre className="text-fg-primary text-sm">
-              {JSON.stringify(contextState, null, 2)}
-            </pre>
+        <motion.div 
+          whileHover={{ y: -2, scale: 1.01 }} 
+          whileTap={{ scale: 0.997 }} 
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        >
+          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.35)] hover:bg-white/10 transition-colors p-6">
+            <h3 className="text-xl font-semibold text-zinc-200 mb-4">🧠 Current Context State</h3>
+            
+            <div className="bg-white/5 border border-white/10 rounded p-4 overflow-x-auto">
+              <pre className="text-zinc-200 text-sm">
+                {JSON.stringify(contextState, null, 2)}
+              </pre>
+            </div>
           </div>
-        </Card>
+        </motion.div>
       )}
     </div>
   );
