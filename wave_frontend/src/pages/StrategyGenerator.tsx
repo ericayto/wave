@@ -104,29 +104,29 @@ export default function StrategyGenerator() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-ocean-100">🎯 Strategy Generator</h1>
+        <h1 className="text-3xl font-bold text-fg-primary">🎯 Strategy Generator</h1>
       </div>
 
       {/* Strategy Generation Form */}
-      <Card className="p-6 bg-gradient-to-br from-ocean-800 to-ocean-900 border-ocean-700">
-        <h3 className="text-xl font-semibold text-ocean-100 mb-4">Generate New Strategy</h3>
+      <Card className="p-6 glass-elev-2 border-glass">
+        <h3 className="text-xl font-semibold text-fg-primary mb-4">Generate New Strategy</h3>
         
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-ocean-300 mb-2">
+            <label className="block text-sm font-medium text-fg-secondary mb-2">
               Strategy Description
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Describe your trading strategy in natural language..."
-              className="w-full h-32 px-3 py-2 bg-ocean-900 border border-ocean-700 rounded-md text-ocean-100 placeholder-ocean-400 focus:outline-none focus:ring-2 focus:ring-ocean-500"
+              className="w-full h-32 px-3 py-2 bg-bg-elev-1 border border-glass rounded-md text-fg-primary placeholder-fg-muted focus:outline-none focus:ring-2 focus:ring-accent-cyan"
             />
           </div>
 
           {/* Example Prompts */}
           <div>
-            <label className="block text-sm font-medium text-ocean-300 mb-2">
+            <label className="block text-sm font-medium text-fg-secondary mb-2">
               Example Descriptions (click to use):
             </label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -136,7 +136,7 @@ export default function StrategyGenerator() {
                   variant="outline"
                   size="sm"
                   onClick={() => setDescription(example)}
-                  className="text-left h-auto py-2 px-3 text-xs border-ocean-600 text-ocean-300 hover:text-ocean-100"
+                  className="text-left h-auto py-2 px-3 text-xs border-glass text-fg-secondary hover:text-fg-primary"
                 >
                   {example}
                 </Button>
@@ -145,14 +145,14 @@ export default function StrategyGenerator() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-ocean-300 mb-2">
+            <label className="block text-sm font-medium text-fg-secondary mb-2">
               Constraints (JSON)
             </label>
             <textarea
               value={constraints}
               onChange={(e) => setConstraints(e.target.value)}
               placeholder='{"symbols": ["BTC/USDT"], "max_position_pct": 0.2}'
-              className="w-full h-20 px-3 py-2 bg-ocean-900 border border-ocean-700 rounded-md text-ocean-100 placeholder-ocean-400 focus:outline-none focus:ring-2 focus:ring-ocean-500 font-mono text-sm"
+              className="w-full h-20 px-3 py-2 bg-bg-elev-1 border border-glass rounded-md text-fg-primary placeholder-fg-muted focus:outline-none focus:ring-2 focus:ring-accent-cyan font-mono text-sm"
             />
           </div>
 
@@ -160,7 +160,7 @@ export default function StrategyGenerator() {
             <Button
               onClick={generateStrategy}
               disabled={!description.trim() || loading}
-              className="bg-ocean-600 hover:bg-ocean-700"
+              className="bg-accent-cyan hover:bg-accent-cyan/80"
             >
               {loading ? 'Generating...' : 'Generate Strategy'}
             </Button>
@@ -172,15 +172,15 @@ export default function StrategyGenerator() {
       {generatedStrategy && (
         <div className="space-y-6">
           {/* Validation Status */}
-          <Card className="p-6 bg-gradient-to-br from-wave-800 to-wave-900 border-wave-700">
-            <h3 className="text-xl font-semibold text-wave-100 mb-4">📊 Strategy Validation</h3>
+          <Card className="p-6 glass-elev-2 border-glass">
+            <h3 className="text-xl font-semibold text-fg-primary mb-4">📊 Strategy Validation</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
                 <div className={`text-2xl font-bold ${getScoreColor(generatedStrategy.validation.score)}`}>
                   {generatedStrategy.validation.score.toFixed(1)}
                 </div>
-                <div className="text-wave-300 text-sm">Quality Score</div>
+                <div className="text-fg-secondary text-sm">Quality Score</div>
               </div>
               
               <div className="text-center">
@@ -189,14 +189,14 @@ export default function StrategyGenerator() {
                 }`}>
                   {generatedStrategy.validation.valid ? '✓' : '✗'}
                 </div>
-                <div className="text-wave-300 text-sm">Valid</div>
+                <div className="text-fg-secondary text-sm">Valid</div>
               </div>
               
               <div className="text-center">
-                <div className="text-2xl font-bold text-wave-100">
+                <div className="text-2xl font-bold text-fg-primary">
                   {generatedStrategy.validation.warnings.length}
                 </div>
-                <div className="text-wave-300 text-sm">Warnings</div>
+                <div className="text-fg-secondary text-sm">Warnings</div>
               </div>
             </div>
 
@@ -224,54 +224,54 @@ export default function StrategyGenerator() {
           </Card>
 
           {/* Strategy Definition */}
-          <Card className="p-6 bg-gradient-to-br from-deep-800 to-deep-900 border-deep-700">
+          <Card className="p-6 glass-elev-2 border-glass">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold text-deep-100">🔧 Strategy Definition</h3>
+              <h3 className="text-xl font-semibold text-fg-primary">🔧 Strategy Definition</h3>
               <Button
                 onClick={() => setSelectedStrategy(generatedStrategy.strategy)}
                 variant="outline"
                 size="sm"
-                className="border-deep-600 text-deep-300 hover:text-deep-100"
+                className="border-glass text-fg-secondary hover:text-fg-primary"
               >
                 Select for Refinement
               </Button>
             </div>
 
-            <div className="bg-deep-900 border border-deep-700 rounded-lg p-4 overflow-x-auto">
-              <pre className="text-deep-200 text-sm whitespace-pre-wrap">
+            <div className="bg-bg-elev-1 border border-glass rounded-lg p-4 overflow-x-auto">
+              <pre className="text-fg-secondary text-sm whitespace-pre-wrap">
                 {JSON.stringify(generatedStrategy.strategy, null, 2)}
               </pre>
             </div>
           </Card>
 
           {/* Strategy Summary */}
-          <Card className="p-6 bg-gradient-to-br from-ocean-800 to-wave-900 border-ocean-700">
-            <h3 className="text-xl font-semibold text-ocean-100 mb-4">📋 Strategy Summary</h3>
+          <Card className="p-6 glass-elev-2 border-glass">
+            <h3 className="text-xl font-semibold text-fg-primary mb-4">📋 Strategy Summary</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-medium text-ocean-200 mb-2">Basic Info</h4>
+                <h4 className="font-medium text-fg-secondary mb-2">Basic Info</h4>
                 <div className="space-y-1 text-sm">
-                  <div><span className="text-ocean-400">Name:</span> <span className="text-ocean-100">{generatedStrategy.strategy.name}</span></div>
-                  <div><span className="text-ocean-400">Version:</span> <span className="text-ocean-100">{generatedStrategy.strategy.version}</span></div>
-                  <div><span className="text-ocean-400">Symbols:</span> <span className="text-ocean-100">{generatedStrategy.strategy.instrument_universe?.join(', ')}</span></div>
-                  <div><span className="text-ocean-400">Timeframes:</span> <span className="text-ocean-100">{generatedStrategy.strategy.timeframes?.join(', ')}</span></div>
+                  <div><span className="text-fg-muted">Name:</span> <span className="text-fg-primary">{generatedStrategy.strategy.name}</span></div>
+                  <div><span className="text-fg-muted">Version:</span> <span className="text-fg-primary">{generatedStrategy.strategy.version}</span></div>
+                  <div><span className="text-fg-muted">Symbols:</span> <span className="text-fg-primary">{generatedStrategy.strategy.instrument_universe?.join(', ')}</span></div>
+                  <div><span className="text-fg-muted">Timeframes:</span> <span className="text-fg-primary">{generatedStrategy.strategy.timeframes?.join(', ')}</span></div>
                 </div>
               </div>
 
               <div>
-                <h4 className="font-medium text-ocean-200 mb-2">Risk Parameters</h4>
+                <h4 className="font-medium text-fg-secondary mb-2">Risk Parameters</h4>
                 <div className="space-y-1 text-sm">
-                  <div><span className="text-ocean-400">Max Position:</span> <span className="text-ocean-100">{(generatedStrategy.strategy.risk?.max_position_pct * 100).toFixed(1)}%</span></div>
-                  <div><span className="text-ocean-400">Daily Loss Limit:</span> <span className="text-ocean-100">{(generatedStrategy.strategy.risk?.daily_loss_limit_pct).toFixed(1)}%</span></div>
-                  <div><span className="text-ocean-400">Max Orders/Hour:</span> <span className="text-ocean-100">{generatedStrategy.strategy.risk?.max_orders_per_hour}</span></div>
+                  <div><span className="text-fg-muted">Max Position:</span> <span className="text-fg-primary">{(generatedStrategy.strategy.risk?.max_position_pct * 100).toFixed(1)}%</span></div>
+                  <div><span className="text-fg-muted">Daily Loss Limit:</span> <span className="text-fg-primary">{(generatedStrategy.strategy.risk?.daily_loss_limit_pct).toFixed(1)}%</span></div>
+                  <div><span className="text-fg-muted">Max Orders/Hour:</span> <span className="text-fg-primary">{generatedStrategy.strategy.risk?.max_orders_per_hour}</span></div>
                 </div>
               </div>
             </div>
 
             <div className="mt-4">
-              <h4 className="font-medium text-ocean-200 mb-2">Signals & Logic</h4>
-              <div className="text-sm text-ocean-300">
+              <h4 className="font-medium text-fg-secondary mb-2">Signals & Logic</h4>
+              <div className="text-sm text-fg-secondary">
                 <div><strong>Signals:</strong> {generatedStrategy.strategy.signals?.length || 0} configured</div>
                 <div><strong>Entry Conditions:</strong> {generatedStrategy.strategy.entries?.length || 0} defined</div>
                 <div><strong>Exit Conditions:</strong> {generatedStrategy.strategy.exits?.length || 0} defined</div>
@@ -283,35 +283,35 @@ export default function StrategyGenerator() {
 
       {/* Strategy Refinement */}
       {selectedStrategy && (
-        <Card className="p-6 bg-gradient-to-br from-wave-800 to-deep-900 border-wave-700">
-          <h3 className="text-xl font-semibold text-wave-100 mb-4">✨ Refine Strategy</h3>
+        <Card className="p-6 glass-elev-2 border-glass">
+          <h3 className="text-xl font-semibold text-fg-primary mb-4">✨ Refine Strategy</h3>
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-wave-300 mb-2">
+              <label className="block text-sm font-medium text-fg-secondary mb-2">
                 Selected Strategy: {selectedStrategy.name}
               </label>
-              <div className="text-xs text-wave-400 bg-wave-900 p-2 rounded border border-wave-700">
+              <div className="text-xs text-fg-muted bg-bg-elev-1 p-2 rounded border border-glass">
                 {selectedStrategy.description || 'No description available'}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-wave-300 mb-2">
+              <label className="block text-sm font-medium text-fg-secondary mb-2">
                 Refinement Request
               </label>
               <textarea
                 value={refinementRequest}
                 onChange={(e) => setRefinementRequest(e.target.value)}
                 placeholder="How would you like to modify this strategy? e.g., 'Make it more conservative by reducing position size' or 'Add volume confirmation to entries'"
-                className="w-full h-24 px-3 py-2 bg-wave-900 border border-wave-700 rounded-md text-wave-100 placeholder-wave-400 focus:outline-none focus:ring-2 focus:ring-wave-500"
+                className="w-full h-24 px-3 py-2 bg-bg-elev-1 border border-glass rounded-md text-fg-primary placeholder-fg-muted focus:outline-none focus:ring-2 focus:ring-accent-cyan"
               />
             </div>
 
             <Button
               onClick={refineStrategy}
               disabled={!refinementRequest.trim() || loading}
-              className="bg-wave-600 hover:bg-wave-700"
+              className="bg-accent-cyan hover:bg-accent-cyan/80"
             >
               {loading ? 'Refining...' : 'Refine Strategy'}
             </Button>

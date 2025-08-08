@@ -132,7 +132,7 @@ export default function LLMCenter() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-ocean-100">🧠 LLM Control Center</h1>
+        <h1 className="text-3xl font-bold text-fg-primary">🧠 LLM Control Center</h1>
         <div className="flex space-x-2">
           <Button onClick={clearCache} variant="outline">
             Clear Cache
@@ -143,12 +143,12 @@ export default function LLMCenter() {
       {/* Status Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Planner Status */}
-        <Card className="p-6 bg-gradient-to-br from-ocean-800 to-ocean-900 border-ocean-700">
-          <h3 className="text-lg font-semibold text-ocean-100 mb-4">Planner Status</h3>
+        <Card className="p-6 glass-elev-2 border-glass">
+          <h3 className="text-lg font-semibold text-fg-primary mb-4">Planner Status</h3>
           {status ? (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-ocean-300">Planning:</span>
+                <span className="text-fg-secondary">Planning:</span>
                 <div className={`px-2 py-1 rounded text-xs ${
                   status.planning_enabled 
                     ? 'bg-green-600 text-white' 
@@ -158,8 +158,8 @@ export default function LLMCenter() {
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-ocean-300">Interval:</span>
-                <span className="text-ocean-100">{status.planning_interval}s</span>
+                <span className="text-fg-secondary">Interval:</span>
+                <span className="text-fg-primary">{status.planning_interval}s</span>
               </div>
               <div className="flex space-x-2 mt-4">
                 <Button 
@@ -172,49 +172,49 @@ export default function LLMCenter() {
               </div>
             </div>
           ) : (
-            <div className="text-ocean-400">Loading...</div>
+            <div className="text-fg-muted">Loading...</div>
           )}
         </Card>
 
         {/* Usage Stats */}
-        <Card className="p-6 bg-gradient-to-br from-wave-800 to-wave-900 border-wave-700">
-          <h3 className="text-lg font-semibold text-wave-100 mb-4">Token Usage</h3>
+        <Card className="p-6 glass-elev-2 border-glass">
+          <h3 className="text-lg font-semibold text-fg-primary mb-4">Token Usage</h3>
           {usage ? (
             <div className="space-y-2">
-              <div className="text-sm text-wave-300">Hourly Usage:</div>
+              <div className="text-sm text-fg-secondary">Hourly Usage:</div>
               {Object.entries(usage.hourly_usage).map(([provider, tokens]) => (
                 <div key={provider} className="flex justify-between">
-                  <span className="text-wave-400 capitalize">{provider}:</span>
-                  <span className="text-wave-100">{tokens.toLocaleString()}</span>
+                  <span className="text-fg-muted capitalize">{provider}:</span>
+                  <span className="text-fg-primary">{tokens.toLocaleString()}</span>
                 </div>
               ))}
-              <div className="pt-2 mt-2 border-t border-wave-700">
+              <div className="pt-2 mt-2 border-t border-glass">
                 <div className="flex justify-between">
-                  <span className="text-wave-300">Cache:</span>
-                  <span className="text-wave-100">{usage.cache_size}</span>
+                  <span className="text-fg-secondary">Cache:</span>
+                  <span className="text-fg-primary">{usage.cache_size}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-wave-300">Providers:</span>
-                  <span className="text-wave-100">{usage.available_providers.length}</span>
+                  <span className="text-fg-secondary">Providers:</span>
+                  <span className="text-fg-primary">{usage.available_providers.length}</span>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="text-wave-400">Loading...</div>
+            <div className="text-fg-muted">Loading...</div>
           )}
         </Card>
 
         {/* Current Plan */}
-        <Card className="p-6 bg-gradient-to-br from-deep-800 to-deep-900 border-deep-700">
-          <h3 className="text-lg font-semibold text-deep-100 mb-4">Current Plan</h3>
+        <Card className="p-6 glass-elev-2 border-glass">
+          <h3 className="text-lg font-semibold text-fg-primary mb-4">Current Plan</h3>
           {status?.current_plan ? (
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-deep-300">Intent:</span>
-                <span className="text-deep-100 capitalize">{status.current_plan.intent}</span>
+                <span className="text-fg-secondary">Intent:</span>
+                <span className="text-fg-primary capitalize">{status.current_plan.intent}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-deep-300">Status:</span>
+                <span className="text-fg-secondary">Status:</span>
                 <span className={`capitalize ${
                   status.current_plan.status === 'completed' 
                     ? 'text-green-400' 
@@ -226,33 +226,33 @@ export default function LLMCenter() {
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-deep-300">Confidence:</span>
-                <span className="text-deep-100">{status.current_plan.confidence}%</span>
+                <span className="text-fg-secondary">Confidence:</span>
+                <span className="text-fg-primary">{status.current_plan.confidence}%</span>
               </div>
             </div>
           ) : (
-            <div className="text-deep-400">No active plan</div>
+            <div className="text-fg-muted">No active plan</div>
           )}
         </Card>
       </div>
 
       {/* Interactive Query */}
-      <Card className="p-6 bg-gradient-to-br from-ocean-800 to-wave-900 border-ocean-700">
-        <h3 className="text-xl font-semibold text-ocean-100 mb-4">💬 Query LLM</h3>
+      <Card className="p-6 glass-elev-2 border-glass">
+        <h3 className="text-xl font-semibold text-fg-primary mb-4">💬 Query LLM</h3>
         <div className="space-y-4">
           <div>
             <textarea
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Ask me about market conditions, generate strategies, or request analysis..."
-              className="w-full h-24 px-3 py-2 bg-ocean-900 border border-ocean-700 rounded-md text-ocean-100 placeholder-ocean-400 focus:outline-none focus:ring-2 focus:ring-ocean-500"
+              className="w-full h-24 px-3 py-2 bg-bg-elev-1 border border-glass rounded-md text-fg-primary placeholder-fg-muted focus:outline-none focus:ring-2 focus:ring-accent-cyan"
             />
           </div>
           <div className="flex justify-between">
             <Button
               onClick={submitQuery}
               disabled={!query.trim() || loading}
-              className="bg-ocean-600 hover:bg-ocean-700"
+              className="bg-accent-cyan hover:bg-accent-cyan/80"
             >
               {loading ? 'Processing...' : 'Submit Query'}
             </Button>
@@ -261,9 +261,9 @@ export default function LLMCenter() {
 
         {/* Query Result */}
         {queryResult && (
-          <div className="mt-6 p-4 bg-ocean-900 rounded-lg border border-ocean-700">
-            <h4 className="text-lg font-medium text-ocean-100 mb-2">Response:</h4>
-            <div className="text-ocean-200 whitespace-pre-wrap">
+          <div className="mt-6 p-4 bg-bg-elev-1 rounded-lg border border-glass">
+            <h4 className="text-lg font-medium text-fg-primary mb-2">Response:</h4>
+            <div className="text-fg-secondary whitespace-pre-wrap">
               {queryResult.status === 'success' ? (
                 <div>
                   {queryResult.result?.result ? (
@@ -273,7 +273,7 @@ export default function LLMCenter() {
                       {queryResult.result.result.results && (
                         <div>
                           <strong>Results:</strong>
-                          <pre className="mt-1 text-sm text-ocean-300">
+                          <pre className="mt-1 text-sm text-fg-muted">
                             {JSON.stringify(queryResult.result.result.results, null, 2)}
                           </pre>
                         </div>
@@ -294,11 +294,11 @@ export default function LLMCenter() {
       </Card>
 
       {/* Planning Interval Control */}
-      <Card className="p-6 bg-gradient-to-br from-wave-800 to-deep-900 border-wave-700">
-        <h3 className="text-xl font-semibold text-wave-100 mb-4">⚙️ Planning Configuration</h3>
+      <Card className="p-6 glass-elev-2 border-glass">
+        <h3 className="text-xl font-semibold text-fg-primary mb-4">⚙️ Planning Configuration</h3>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-wave-300 mb-2">
+            <label className="block text-sm font-medium text-fg-secondary mb-2">
               Planning Interval (seconds)
             </label>
             <div className="flex items-center space-x-4">
@@ -308,16 +308,16 @@ export default function LLMCenter() {
                 onChange={(e) => setPlanningInterval(parseInt(e.target.value) || 300)}
                 min={60}
                 max={3600}
-                className="w-32 px-3 py-2 bg-wave-900 border border-wave-700 rounded-md text-wave-100 focus:outline-none focus:ring-2 focus:ring-wave-500"
+                className="w-32 px-3 py-2 bg-bg-elev-1 border border-glass rounded-md text-fg-primary focus:outline-none focus:ring-2 focus:ring-accent-cyan"
               />
               <Button
                 onClick={() => controlPlanner('set_interval', planningInterval)}
-                className="bg-wave-600 hover:bg-wave-700"
+                className="bg-accent-cyan hover:bg-accent-cyan/80"
               >
                 Update Interval
               </Button>
             </div>
-            <p className="text-xs text-wave-400 mt-1">
+            <p className="text-xs text-fg-muted mt-1">
               How often the LLM reviews market conditions (60-3600 seconds)
             </p>
           </div>
