@@ -42,4 +42,136 @@ class WebSocketManager:
         
         try:
             # Send welcome message
-            await websocket.send_text(json.dumps({\n                \"type\": \"connection\",\n                \"data\": {\n                    \"status\": \"connected\",\n                    \"connection_id\": connection_id,\n                    \"timestamp\": datetime.utcnow().isoformat()\n                }\n            }))\n            \n            # Handle messages\n            async for message in websocket.iter_text():\n                await self._handle_message(connection_id, message)\n                \n        except WebSocketDisconnect:\n            await self.disconnect(connection_id)\n        except Exception as e:\n            logger.error(f\"WebSocket error: {e}\")\n            await self.disconnect(connection_id)\n    \n    async def disconnect(self, connection_id: str):\n        \"\"\"Handle WebSocket disconnection.\"\"\"\n        if connection_id in self.connections:\n            del self.connections[connection_id]\n        \n        # Remove from all subscriptions\n        for topic, subscribers in self.subscriptions.items():\n            subscribers.discard(connection_id)\n        \n        logger.info(f\"WebSocket disconnected: {connection_id}\")\n    \n    async def _handle_message(self, connection_id: str, message: str):\n        \"\"\"Handle incoming WebSocket message.\"\"\"\n        try:\n            data = json.loads(message)\n            msg_type = data.get(\"type\")\n            \n            if msg_type == \"subscribe\":\n                await self._handle_subscribe(connection_id, data)\n            elif msg_type == \"unsubscribe\":\n                await self._handle_unsubscribe(connection_id, data)\n            elif msg_type == \"ping\":\n                await self._handle_ping(connection_id)\n            else:\n                logger.warning(f\"Unknown message type: {msg_type}\")\n                \n        except json.JSONDecodeError:\n            logger.error(f\"Invalid JSON message: {message}\")\n        except Exception as e:\n            logger.error(f\"Error handling message: {e}\")\n    \n    async def _handle_subscribe(self, connection_id: str, data: dict):\n        \"\"\"Handle subscription request.\"\"\"\n        topics = data.get(\"topics\", [])\n        \n        for topic in topics:\n            if topic not in self.subscriptions:\n                self.subscriptions[topic] = set()\n            \n            self.subscriptions[topic].add(connection_id)\n            logger.debug(f\"Connection {connection_id} subscribed to {topic}\")\n        \n        # Send confirmation\n        await self.send_to_connection(connection_id, {\n            \"type\": \"subscribed\",\n            \"data\": {\"topics\": topics}\n        })\n    \n    async def _handle_unsubscribe(self, connection_id: str, data: dict):\n        \"\"\"Handle unsubscription request.\"\"\"\n        topics = data.get(\"topics\", [])\n        \n        for topic in topics:\n            if topic in self.subscriptions:\n                self.subscriptions[topic].discard(connection_id)\n                logger.debug(f\"Connection {connection_id} unsubscribed from {topic}\")\n        \n        # Send confirmation\n        await self.send_to_connection(connection_id, {\n            \"type\": \"unsubscribed\",\n            \"data\": {\"topics\": topics}\n        })\n    \n    async def _handle_ping(self, connection_id: str):\n        \"\"\"Handle ping message.\"\"\"\n        await self.send_to_connection(connection_id, {\n            \"type\": \"pong\",\n            \"data\": {\"timestamp\": datetime.utcnow().isoformat()}\n        })\n    \n    async def send_to_connection(self, connection_id: str, message: dict):\n        \"\"\"Send message to specific connection.\"\"\"\n        if connection_id not in self.connections:\n            return\n        \n        try:\n            websocket = self.connections[connection_id]\n            await websocket.send_text(json.dumps(message))\n        except Exception as e:\n            logger.error(f\"Error sending to connection {connection_id}: {e}\")\n            await self.disconnect(connection_id)\n    \n    async def broadcast(self, topic: str, message: dict):\n        \"\"\"Broadcast message to all subscribers of a topic.\"\"\"\n        if topic not in self.subscriptions:\n            return\n        \n        # Add metadata\n        full_message = {\n            \"topic\": topic,\n            \"timestamp\": datetime.utcnow().isoformat(),\n            **message\n        }\n        \n        # Send to all subscribers\n        disconnected = []\n        for connection_id in self.subscriptions[topic].copy():\n            try:\n                await self.send_to_connection(connection_id, full_message)\n            except Exception as e:\n                logger.error(f\"Error broadcasting to {connection_id}: {e}\")\n                disconnected.append(connection_id)\n        \n        # Clean up disconnected connections\n        for connection_id in disconnected:\n            await self.disconnect(connection_id)\n    \n    async def get_connection_count(self) -> int:\n        \"\"\"Get number of active connections.\"\"\"\n        return len(self.connections)\n    \n    async def get_subscription_count(self) -> Dict[str, int]:\n        \"\"\"Get subscription counts by topic.\"\"\"\n        return {topic: len(subscribers) for topic, subscribers in self.subscriptions.items()}
+            await websocket.send_text(json.dumps({
+                "type": "connection",
+                "data": {
+                    "status": "connected",
+                    "connection_id": connection_id,
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+            }))
+            
+            # Handle messages
+            async for message in websocket.iter_text():
+                await self._handle_message(connection_id, message)
+                
+        except WebSocketDisconnect:
+            await self.disconnect(connection_id)
+        except Exception as e:
+            logger.error(f"WebSocket error: {e}")
+            await self.disconnect(connection_id)
+    
+    async def disconnect(self, connection_id: str):
+        """Handle WebSocket disconnection."""
+        if connection_id in self.connections:
+            del self.connections[connection_id]
+        
+        # Remove from all subscriptions
+        for topic, subscribers in self.subscriptions.items():
+            subscribers.discard(connection_id)
+        
+        logger.info(f"WebSocket disconnected: {connection_id}")
+    
+    async def _handle_message(self, connection_id: str, message: str):
+        """Handle incoming WebSocket message."""
+        try:
+            data = json.loads(message)
+            msg_type = data.get("type")
+            
+            if msg_type == "subscribe":
+                await self._handle_subscribe(connection_id, data)
+            elif msg_type == "unsubscribe":
+                await self._handle_unsubscribe(connection_id, data)
+            elif msg_type == "ping":
+                await self._handle_ping(connection_id)
+            else:
+                logger.warning(f"Unknown message type: {msg_type}")
+                
+        except json.JSONDecodeError:
+            logger.error(f"Invalid JSON message: {message}")
+        except Exception as e:
+            logger.error(f"Error handling message: {e}")
+    
+    async def _handle_subscribe(self, connection_id: str, data: dict):
+        """Handle subscription request."""
+        topics = data.get("topics", [])
+        
+        for topic in topics:
+            if topic not in self.subscriptions:
+                self.subscriptions[topic] = set()
+            
+            self.subscriptions[topic].add(connection_id)
+            logger.debug(f"Connection {connection_id} subscribed to {topic}")
+        
+        # Send confirmation
+        await self.send_to_connection(connection_id, {
+            "type": "subscribed",
+            "data": {"topics": topics}
+        })
+    
+    async def _handle_unsubscribe(self, connection_id: str, data: dict):
+        """Handle unsubscription request."""
+        topics = data.get("topics", [])
+        
+        for topic in topics:
+            if topic in self.subscriptions:
+                self.subscriptions[topic].discard(connection_id)
+                logger.debug(f"Connection {connection_id} unsubscribed from {topic}")
+        
+        # Send confirmation
+        await self.send_to_connection(connection_id, {
+            "type": "unsubscribed",
+            "data": {"topics": topics}
+        })
+    
+    async def _handle_ping(self, connection_id: str):
+        """Handle ping message."""
+        await self.send_to_connection(connection_id, {
+            "type": "pong",
+            "data": {"timestamp": datetime.utcnow().isoformat()}
+        })
+    
+    async def send_to_connection(self, connection_id: str, message: dict):
+        """Send message to specific connection."""
+        if connection_id not in self.connections:
+            return
+        
+        try:
+            websocket = self.connections[connection_id]
+            await websocket.send_text(json.dumps(message))
+        except Exception as e:
+            logger.error(f"Error sending to connection {connection_id}: {e}")
+            await self.disconnect(connection_id)
+    
+    async def broadcast(self, topic: str, message: dict):
+        """Broadcast message to all subscribers of a topic."""
+        if topic not in self.subscriptions:
+            return
+        
+        # Add metadata
+        full_message = {
+            "topic": topic,
+            "timestamp": datetime.utcnow().isoformat(),
+            **message
+        }
+        
+        # Send to all subscribers
+        disconnected = []
+        for connection_id in self.subscriptions[topic].copy():
+            try:
+                await self.send_to_connection(connection_id, full_message)
+            except Exception as e:
+                logger.error(f"Error broadcasting to {connection_id}: {e}")
+                disconnected.append(connection_id)
+        
+        # Clean up disconnected connections
+        for connection_id in disconnected:
+            await self.disconnect(connection_id)
+    
+    async def get_connection_count(self) -> int:
+        """Get number of active connections."""
+        return len(self.connections)
+    
+    async def get_subscription_count(self) -> Dict[str, int]:
+        """Get subscription counts by topic."""
+        return {topic: len(subscribers) for topic, subscribers in self.subscriptions.items()}

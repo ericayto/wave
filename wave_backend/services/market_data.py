@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 import logging
-import aioredis
+import redis.asyncio as redis
 from sqlalchemy.ext.asyncio import AsyncSession
 import pandas as pd
 from decimal import Decimal

@@ -129,3 +129,13 @@ class EventBus:
         loop = asyncio.get_event_loop()
         with concurrent.futures.ThreadPoolExecutor() as pool:
             await loop.run_in_executor(pool, callback, event)
+
+# Global event bus instance
+_global_event_bus = None
+
+def get_event_bus() -> EventBus:
+    """Get or create the global event bus instance."""
+    global _global_event_bus
+    if _global_event_bus is None:
+        _global_event_bus = EventBus()
+    return _global_event_bus

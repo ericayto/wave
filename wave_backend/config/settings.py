@@ -137,3 +137,6 @@ def get_settings() -> Settings:
         print("📝 Using default configuration")
     
     return Settings(**config_data)
+
+# Global settings instance for easy imports
+settings = get_settings()
