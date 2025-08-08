@@ -52,11 +52,11 @@ export const Layout: React.FC<LayoutProps> = ({
         {/* Logo */}
         <div className="p-6 border-b border-glass">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-accent-cyan rounded-glass flex items-center justify-center glow-cyan">
-              <Waves className="w-5 h-5 text-white" />
+            <div className="w-8 h-8 bg-accent-cyan rounded-glass flex items-center justify-center glow-cyan text-xl">
+              🌊
             </div>
             <div>
-              <h1 className="text-xl font-bold text-fg-primary text-glow-cyan">Nebula</h1>
+              <h1 className="text-xl font-bold text-fg-primary text-glow-cyan">Wave</h1>
               <p className="text-xs text-fg-secondary">Trading Platform</p>
             </div>
           </div>
@@ -67,8 +67,8 @@ export const Layout: React.FC<LayoutProps> = ({
           <div className="flex items-center space-x-2">
             {isConnected ? (
               <>
-                <Wifi className="w-4 h-4 text-accent-emerald" />
-                <span className="text-xs text-accent-emerald">Connected</span>
+                <Wifi className="w-4 h-4 text-accent-cyan" />
+                <span className="text-xs text-accent-cyan">Connected</span>
               </>
             ) : (
               <>
@@ -105,7 +105,7 @@ export const Layout: React.FC<LayoutProps> = ({
         {/* Footer */}
         <div className="p-4 border-t border-glass">
           <div className="text-xs text-fg-muted text-center">
-            Nebula v2.0 - Advanced Trading
+            Wave v2.0 - Advanced Trading
           </div>
         </div>
       </div>
@@ -129,7 +129,7 @@ export const Layout: React.FC<LayoutProps> = ({
               Paper Mode
             </div>
             <div className="flex items-center space-x-2 glass-elev-1 px-3 py-1 rounded-glass">
-              <div className="w-2 h-2 bg-accent-emerald rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-accent-cyan rounded-full animate-pulse"></div>
               <span className="text-xs text-fg-secondary">Live</span>
             </div>
           </div>
