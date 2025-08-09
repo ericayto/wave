@@ -98,7 +98,7 @@ Copyright © 2025 Eric Aytekin.
 All rights reserved.
 You may download and use this software for personal, educational, or non-commercial purposes only.
 You may **not** redistribute, modify, or use it for commercial purposes.
-Full license terms are in the `LICENSE` file.
+Full license terms are in the [LICENSE](LICENSE) file.
 
 ## ⚠ Disclaimer
 
