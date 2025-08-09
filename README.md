@@ -6,7 +6,7 @@
 
 Hi, I’m **Eric Aytekin**, a student in the UK.
 I built Wave as a personal learning project to explore crypto trading, AI, and full-stack development.
-It’s an experimental bot — no real money involved — coded with a mix of curiosity, late nights, and the help of Claude.
+It’s an experimental bot — no real money involved.
 
 Wave runs entirely on your own computer, combining traditional trading strategies with AI-powered market analysis. It’s **paper-trading only**, so you can explore ideas without risking real funds.
 
@@ -104,3 +104,4 @@ Full license terms are in the `LICENSE` file.
 
 * This is for educational use only — not financial advice.
 * Crypto trading carries risk; even in paper trading, results may not reflect real markets.
+
