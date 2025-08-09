@@ -66,22 +66,55 @@ It:
 * 🟩 Node.js 18+
 * 🌀 Git
 
-### Install & Run
+### Global Installation (Recommended)
+
+Install Wave as a global `wave` command with auto-update functionality:
 
 ```bash
-git clone https://github.com/yourusername/wave.git
+git clone https://github.com/ericayto/wave.git
 cd wave
-make setup && make dev
+chmod +x install.sh
+./install.sh
+```
+
+Once installed, you can use Wave from anywhere:
+
+```bash
+wave setup    # Set up Wave environment (first time only)
+wave start    # Start Wave services
+wave stop     # Stop Wave services
+wave update   # Manually update to latest version
 ```
 
 * **Dashboard:** [http://localhost:5173](http://localhost:5173)
 * **API Docs:** [http://localhost:8080/docs](http://localhost:8080/docs)
 
-Wave starts in paper-trading mode by default.
+Wave starts in paper-trading mode by default and **automatically updates itself** on startup to ensure you always have the latest features!
+
+### Local Development Installation
+
+For development or if you prefer not to install globally:
+
+```bash
+git clone https://github.com/ericayto/wave.git
+cd wave
+make setup && make dev
+```
 
 ---
 
 ## 🛠 Commands
+
+### Global Commands (After Installation)
+
+| Command       | Action                           |
+| ------------- | -------------------------------- |
+| `wave setup`  | Set up Wave environment          |
+| `wave start`  | Start Wave services              |
+| `wave stop`   | Stop Wave services               |
+| `wave update` | Manually update to latest version|
+
+### Development Commands (Local Installation)
 
 | Command       | Action                 |
 | ------------- | ---------------------- |
@@ -91,6 +124,13 @@ Wave starts in paper-trading mode by default.
 | `make test`   | Run tests              |
 | `make format` | Format code            |
 | `make clean`  | Remove generated files |
+
+### Installation Management
+
+| Command            | Action                    |
+| ------------------ | ------------------------- |
+| `./install.sh`     | Install Wave globally     |
+| `./uninstall.sh`   | Remove global installation|
 
 ---
 
@@ -107,6 +147,30 @@ mode = "paper"
 max_position_pct = 0.25
 daily_loss_limit_pct = 2.0
 ```
+
+---
+
+## 🔄 Auto-Update
+
+Wave includes intelligent auto-update functionality when installed globally:
+
+* **Automatic Updates:** Wave checks for updates every 24 hours when you run `wave start`
+* **Smart Timing:** Updates only check once per day to avoid unnecessary network requests
+* **User Control:** 5-second countdown gives you time to skip updates with Ctrl+C
+* **Dependency Management:** Automatically reinstalls dependencies after updates
+* **Safe Updates:** Only works with git repositories to ensure integrity
+
+### Manual Updates
+
+You can manually update at any time:
+
+```bash
+wave update
+```
+
+### Disable Auto-Updates
+
+To disable auto-updates temporarily, you can skip them with Ctrl+C during the 5-second countdown, or edit the `UPDATE_INTERVAL_HOURS` setting in the `wave` script.
 
 ---
 
