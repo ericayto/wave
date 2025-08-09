@@ -5,13 +5,13 @@
 ![Node](https://img.shields.io/badge/node-18%2B-green)
 ![Status](https://img.shields.io/badge/status-Experimental-yellow)
 
-> **An AI-powered crypto trading bot — runs entirely on your machine.**
+> **An AI-powered crypto trading bot — runs locally with optional cloud AI integration.**
 > Test strategies now. Real trading support coming soon.
 
 ---
 
 ![Wave Dashboard Preview](docs/preview.png)
-*(Dark theme, real-time updates, fully local)*
+*(Dark theme, real-time updates, local-first design)*
 
 ---
 
@@ -23,7 +23,7 @@ I’m **Eric Aytekin**, a UK-based student interested in combining AI, crypto, a
 It:
 
 * Currently runs in paper-trading mode.
-* Keeps all your data on your machine.
+* Executes locally, with the option to use local AI models or connect to cloud-based ones.
 * Will support real trading in the future.
 
 ---
@@ -33,7 +33,7 @@ It:
 ### 🛡 Safety First (for now)
 
 * Paper trading mode — no real funds used yet.
-* Local execution — your data stays with you.
+* Local execution — your data stays with you unless you choose to use cloud-based AI models.
 * Risk management — position sizing, daily loss limits.
 * Kill switch — halt everything instantly.
 
@@ -112,7 +112,7 @@ daily_loss_limit_pct = 2.0
 
 ## 🔒 Privacy & Security
 
-* Runs locally — no data leaves your machine.
+* Runs locally, with optional use of cloud-based AI models.
 * API keys stored securely.
 * No tracking, telemetry, or analytics.
 
@@ -132,4 +132,5 @@ See LICENSE file for full terms.
 This is **educational only** — not financial advice.
 Crypto is volatile; paper results ≠ real results.
 Real trading support is planned but not yet implemented.
+
 
