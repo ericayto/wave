@@ -5,8 +5,8 @@
 ![Node](https://img.shields.io/badge/node-18%2B-green)
 ![Status](https://img.shields.io/badge/status-Experimental-yellow)
 
-> **A safe, AI-powered crypto trading simulator — runs entirely on your machine.**
-> Test strategies. Learn the market. Risk absolutely nothing.
+> **An AI-powered crypto trading bot — runs entirely on your machine.**
+> Test strategies now. Real trading support coming soon.
 
 ---
 
@@ -17,25 +17,25 @@
 
 ## 👋 About
 
-I’m **Eric Aytekin**, a UK-based student who wanted to mash together AI, crypto, and full-stack dev without burning money.
-**Wave** is a local-only, paper-trading crypto bot that blends traditional technical indicators with LLM-powered market analysis.
+I’m **Eric Aytekin**, a UK-based student interested in combining AI, crypto, and full-stack development in a single project.
+**Wave** is a local-first crypto bot that blends traditional technical indicators with LLM-powered market analysis.
 
 It:
 
-* Never touches real money.
-* Never sends your data anywhere.
-* Never pretends to be financial advice.
+* Currently runs in paper-trading mode.
+* Keeps all your data on your machine.
+* Will support real trading in the future.
 
 ---
 
 ## ✨ Features
 
-### 🛡 Safety First
+### 🛡 Safety First (for now)
 
-* **Paper trading only** – zero real-fund exposure.
-* **Local execution** – your data never leaves your machine.
-* **Risk management** – position sizing, daily loss limits.
-* **Kill switch** – halt everything instantly.
+* Paper trading mode — no real funds used yet.
+* Local execution — your data stays with you.
+* Risk management — position sizing, daily loss limits.
+* Kill switch — halt everything instantly.
 
 ### 📈 Trading Power
 
@@ -77,7 +77,7 @@ make setup && make dev
 * **Dashboard:** [http://localhost:5173](http://localhost:5173)
 * **API Docs:** [http://localhost:8080/docs](http://localhost:8080/docs)
 
-Wave starts with demo data and paper trading enabled by default.
+Wave starts in paper-trading mode by default.
 
 ---
 
@@ -131,4 +131,5 @@ See LICENSE file for full terms.
 
 This is **educational only** — not financial advice.
 Crypto is volatile; paper results ≠ real results.
+Real trading support is planned but not yet implemented.
 
