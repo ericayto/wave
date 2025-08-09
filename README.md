@@ -1,68 +1,89 @@
 # 🌊 Wave
 
-**Local LLM-Driven Crypto Trading Bot (Paper Trading)**
+![License](https://img.shields.io/badge/license-Personal--Use-orange)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![Node](https://img.shields.io/badge/node-18%2B-green)
+![Status](https://img.shields.io/badge/status-Experimental-yellow)
 
-## 👋 About Me
+> **A safe, AI-powered crypto trading simulator — runs entirely on your machine.**
+> Test strategies. Learn the market. Risk absolutely nothing.
 
-Hi, I’m **Eric Aytekin**, a student in the UK.
-I built Wave as a personal learning project to explore crypto trading, AI, and full-stack development.
-It’s an experimental bot — no real money involved.
+---
 
-Wave runs entirely on your own computer, combining traditional trading strategies with AI-powered market analysis. It’s **paper-trading only**, so you can explore ideas without risking real funds.
+![Wave Dashboard Preview](docs/preview.png)
+*(Dark theme, real-time updates, fully local)*
+
+---
+
+## 👋 About
+
+I’m **Eric Aytekin**, a UK-based student who wanted to mash together AI, crypto, and full-stack dev without burning money.
+**Wave** is a local-only, paper-trading crypto bot that blends traditional technical indicators with LLM-powered market analysis.
+
+It:
+
+* Never touches real money.
+* Never sends your data anywhere.
+* Never pretends to be financial advice.
+
+---
 
 ## ✨ Features
 
-### Safety
+### 🛡 Safety First
 
-* **Paper trading only** – No real funds involved.
-* **Local execution** – Your data stays with you.
-* **Risk management** – Position sizing and loss limits.
-* **Kill switch** – Stop all trading instantly.
+* **Paper trading only** – zero real-fund exposure.
+* **Local execution** – your data never leaves your machine.
+* **Risk management** – position sizing, daily loss limits.
+* **Kill switch** – halt everything instantly.
 
-### Trading
+### 📈 Trading Power
 
-* Multiple strategies at once.
-* Built-in indicators (SMA, RSI, MACD, etc.).
-* Fast analysis cycles (every 30 seconds).
-* Performance tracking.
+* Run multiple strategies in parallel.
+* Built-in indicators: SMA, RSI, MACD, and more.
+* Rapid analysis cycles every 30 seconds.
+* Track performance over time.
 
-### Interface
+### 🖥 Interface You’ll Actually Use
 
-* Simple, dark-themed dashboard.
+* Minimal, dark-themed dashboard.
 * Real-time updates via WebSockets.
-* Works on desktop and mobile.
+* Works on desktop *and* mobile.
 
-### For tinkerers
+### 🧩 For Tinkerers
 
-* FastAPI backend + React frontend.
-* Easy to add your own strategies.
-* Well-commented code for learning.
+* **FastAPI** backend + **React** frontend.
+* Drop in your own strategies easily.
+* Code commented for learners, not just future-you.
 
-## 🚀 Getting Started
+---
 
-**Requirements**
+## 🚀 Quick Start
 
-* Python 3.11+
-* Node.js 18+
-* Git
+### Requirements
 
-**Install & Run**
+* 🐍 Python 3.11+
+* 🟩 Node.js 18+
+* 🌀 Git
+
+### Install & Run
 
 ```bash
 git clone https://github.com/yourusername/wave.git
 cd wave
-make setup
-make dev
+make setup && make dev
 ```
 
-* Dashboard: `http://localhost:5173`
-* API Docs: `http://localhost:8080/docs`
+* **Dashboard:** [http://localhost:5173](http://localhost:5173)
+* **API Docs:** [http://localhost:8080/docs](http://localhost:8080/docs)
 
-Wave will start with demo data and paper trading enabled.
+Wave starts with demo data and paper trading enabled by default.
+
+---
 
 ## 🛠 Commands
 
-| Command       | What it does           |
+| Command       | Action                 |
 | ------------- | ---------------------- |
 | `make setup`  | Install everything     |
 | `make dev`    | Run backend & frontend |
@@ -71,9 +92,11 @@ Wave will start with demo data and paper trading enabled.
 | `make format` | Format code            |
 | `make clean`  | Remove generated files |
 
+---
+
 ## ⚙ Configuration
 
-Edit `config/wave.toml` to change settings like:
+Edit `config/wave.toml` to tweak settings:
 
 ```toml
 [core]
@@ -85,24 +108,27 @@ max_position_pct = 0.25
 daily_loss_limit_pct = 2.0
 ```
 
+---
+
 ## 🔒 Privacy & Security
 
-* Runs locally — no data sent anywhere.
+* Runs locally — no data leaves your machine.
 * API keys stored securely.
 * No tracking, telemetry, or analytics.
+
+---
 
 ## 📜 License
 
 **Personal Use License – UK Jurisdiction**
 Copyright © 2025 Eric Aytekin.
-All rights reserved.
-You may download and use this software for personal, educational, or non-commercial purposes only.
-You may **not** redistribute, modify, or use it for commercial purposes.
-Full license terms are in the [LICENSE](LICENSE) file.
+Use for personal, educational, or non-commercial purposes only.
+See LICENSE file for full terms.
+
+---
 
 ## ⚠ Disclaimer
 
-* This is for educational use only — not financial advice.
-* Crypto trading carries risk; even in paper trading, results may not reflect real markets.
-
+This is **educational only** — not financial advice.
+Crypto is volatile; paper results ≠ real results.
 
