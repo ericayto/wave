@@ -20,7 +20,7 @@ import uvicorn
 from wave_backend.config.settings import get_settings
 from wave_backend.models.database import init_database
 from wave_backend.models.all_models import *  # Import all models
-from wave_backend.api import auth, portfolio, market, trading, strategies, risk, logs, memory, llm
+from wave_backend.api import auth, portfolio, market, trading, strategies, risk, logs, memory, llm, config
 from wave_backend.services.event_bus import EventBus
 from wave_backend.services.websocket import WebSocketManager
 from wave_backend.services.market_data import MarketDataService
@@ -141,6 +141,7 @@ def create_app() -> FastAPI:
     app.include_router(logs.router, prefix="/api/logs", tags=["logs"])
     app.include_router(memory.router, prefix="/api/memory", tags=["memory"])
     app.include_router(llm.router, prefix="/api/llm", tags=["llm"])
+    app.include_router(config.router, tags=["config"])
     
     # WebSocket endpoint
     app.include_router(websocket_manager.router, prefix="/ws")
